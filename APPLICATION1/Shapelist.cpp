@@ -1,36 +1,154 @@
 ﻿#include "ShapeList.h"
 #include <iostream>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <Windows.h>
+#include "console.h"
 
 ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0) {
     readScoresFromFile("scores.txt"); // Read scores from file when creating ShapeList
 }
 
-ShapeList::~ShapeList() {
-    // Implémentez ici la logique du destructeur pour libérer la mémoire si nécessaire
-    Node* current = head;
-    while (current) {
-        Node* next = current->next;
-        delete current;
-        current = next;
+void swappos(Node* a, Node* b) {
+    if (a == nullptr || b == nullptr) {
+        // Handle the error, e.g., by returning from the function
+        return;
     }
+	Shape temp = a->data ;
+	a->data = b->data;
+	b->data = temp;
 }
 
+void ShapeList::shiftcolor(int a) {
+    // get head jouj merate
+    Node* current = getHead();
+    Node* current1 = getHead();
+    // get head dyal list khasa b couleur
+    while (current->data.color != a) {
+		current = current->next;
+        current1 = current1->next;
+	}
+    Node* tail = nullptr;
+    // get tail dyal list khasa b couleur
+    while (current1->nextcouleur != nullptr ) {
+        current1 = current1->nextcouleur;
+        tail = current1; 
+    }
+
+
+	/*Node* tail = tailcoleur;
+    Node* current = headcoleur;*/
+    // b9a nswapi kola mera m3a element b numbre iteration
+    while (current != tail) {
+		swappos(current, tail);
+		current = current->nextcouleur;
+	}
+
+}
+
+void ShapeList::shiftform(int a) {
+    // get head jouj merate
+    Node* current = getHead();
+    Node* current1 = getHead();
+    // get head dyal list khasa b form
+    while (current->data.type != a) {
+        current = current->next;
+        current1 = current1->next;
+    }
+    Node* tail = nullptr;
+    // get tail dyal list khasa b form
+    while (current1->nextforme != nullptr) {
+        current1 = current1->nextforme;
+        tail = current1;
+    }
+
+
+    /*Node* tail = tailcoleur;
+    Node* current = headcoleur;*/
+    // b9a nswapi kola mera m3a element b numbre iteration
+    while (current != tail) {
+        swappos(current, tail);
+        current = current->nextforme;
+    }
+
+}
+
+
 void ShapeList::addToBeginning(Shape shape) {
-    Node* newNode = new Node{ shape, head, nullptr };
+    Console console;
+    Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr };
     if (head)
         head->prev = newNode;
     head = newNode;
     if (!tail)
         tail = head;
+
+    int count1 = 0, count2 = 0;
+    Node* current = head->next;
+    while (current != nullptr ) {
+        
+        if (count1 == 0)
+        {  
+                
+
+            if (current->data.color == newNode->data.color) {
+                        newNode->nextcouleur = current;
+                        current->prevcouleur = newNode;
+                        count1 = 1;
+                       
+            }
+        }
+
+        if (count2 == 0)
+        {    	
+                
+
+            if (current->data.type == newNode->data.type) {
+                newNode->nextforme = current;
+                current->prevforme = newNode;
+                count2 = 1;
+               
+            }
+        }
+        
+        current = current->next;
+    }
 }
 
+
 void ShapeList::addToEnd(Shape shape) {
-    Node* newNode = new Node{ shape, nullptr, tail };
+    Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr };
     if (tail)
         tail->next = newNode;
     tail = newNode;
     if (!head)
-        head = tail;
+      head = tail;
+   
+    Node* current = tail->prev;
+    int count1 = 0 , count2 = 0;
+    while (current != nullptr) {
+        if(count1==0){
+            if (current->data.color == newNode->data.color) {
+                newNode->prevcouleur= current;
+                current->nextcouleur = newNode;
+                count1 = 1;
+                
+            }
+        }
+
+        if (count2 == 0) {
+            if (current->data.type == newNode->data.type) {
+                newNode->prevforme = current;
+                current->nextforme = newNode;
+
+                count2 = 1;
+                
+            }
+        }
+        
+        
+        current = current->prev;
+    }
 }
 
 void ShapeList::displayList() {
@@ -40,7 +158,8 @@ void ShapeList::displayList() {
         current = current->next;
     }
 }
-void ShapeList::checkPatterns(int& score) {
+
+void ShapeList::removeNodesWithSameColorOrType(int &score) {
     if (head == nullptr || head->next == nullptr || head->next->next == nullptr) {
         // If the list contains fewer than three elements, there are no patterns to check
         return;
@@ -72,8 +191,7 @@ void ShapeList::checkPatterns(int& score) {
                     temp->prev = prev;
                 }
             }
-            // Update the score
-            score += 300; // Adjust as needed
+            score += 300;
             current = temp;
         }
         else {
@@ -83,6 +201,7 @@ void ShapeList::checkPatterns(int& score) {
         }
     }
 }
+
 
 
 Node* ShapeList::getHead() const {
@@ -148,4 +267,19 @@ void ShapeList::createScoresFile(const std::string& filename) {
         file.close();
         std::cout << "Scores file created successfully: " << filename << std::endl;
     }
+}
+
+
+ShapeList::~ShapeList() {
+    // Implémentez ici la logique du destructeur pour libérer la mémoire si nécessaire
+    /*Node* current = head;
+    Node* next = nullptr;
+    while (current && current->next) {
+
+        next = current->next;
+        delete current;
+        current = next;
+    }
+    head = nullptr;
+    tail = nullptr;*/
 }
