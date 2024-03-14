@@ -2,25 +2,26 @@
 //#define SFML_GRAPHICS_H
 //
 //#include <SFML/Graphics.hpp>
+//#include "ShapeList.h"
 //
-//// Forward declaration of Shape
-//struct Shape;
-//
-//// Define class for SFMLGraphics
 //class SFMLGraphics {
 //private:
 //    sf::RenderWindow window;
 //    sf::Font font;
-//    sf::Text scoreText;
+//    sf::Text text;
+//    sf::Texture squareTexture;
+//    sf::Texture circleTexture;
+//    sf::Texture triangleTexture;
+//    sf::Texture rectangleTexture;
+//
+//    sf::Sprite currentShapeSprite;
+//    sf::Sprite nextShapeSprite;
 //
 //public:
 //    SFMLGraphics();
-//    void drawShape(Shape shape);
-//    void drawScore(int score);
-//    void display();
-//    bool isOpen();
-//    void clear();
-//    void close();
+//    void display(ShapeList& shapeList, Shape currentShape, Shape nextShape, int currentScore, int topScore);
+//    int getUserChoice();
+//    void loadTextures();
 //};
 //
 //#endif // SFML_GRAPHICS_H

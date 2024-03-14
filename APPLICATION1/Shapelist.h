@@ -1,9 +1,11 @@
 #ifndef SHAPE_LIST_H
 #define SHAPE_LIST_H
 
-#include <SFML/Graphics.hpp>
+
 #include <fstream> // For file input/output
 #include <string>
+#include <SFML/Graphics.hpp>
+
 // Define integer constants for shape type
 const int SQUARE = 0;
 const int CIRCLE = 1;
@@ -20,7 +22,7 @@ const int YELLOW = 3;
 struct Shape {
     int type;
     int color;
-    sf::Vector2f position;
+    sf::Vector2f position;  
 };
 
 // Define struct for Node
@@ -28,10 +30,15 @@ struct Node {
     Shape data;
     Node* next;
     Node* prev;
+    Node* nextcouleur;
+    Node* prevcouleur;
+    Node* nextforme;
+    Node* prevforme;
 };
 
 // Define class for ShapeList
 class ShapeList {
+
 private:
     Node* head;
     Node* tail;
@@ -44,7 +51,7 @@ public:
     void addToBeginning(Shape shape);
     void addToEnd(Shape shape);
     void displayList();
-    void checkPatterns(int& score);
+    void removeNodesWithSameColorOrType(int& score);
 
     Node* getHead() const;
     int getLastScore() const;
@@ -55,5 +62,5 @@ public:
     void writeScoresToFile(const std::string& filename);
     void createScoresFile(const std::string& filename); // Method to return the score
 };
-
+ 
 #endif // SHAPE_LIST_H

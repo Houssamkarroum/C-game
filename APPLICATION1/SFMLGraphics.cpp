@@ -1,39 +1,70 @@
 //#include "SFMLGraphics.h"
-//#include <iostream>
-//SFMLGraphics::SFMLGraphics() {
-//    window.create(sf::VideoMode(800, 600), "SFML Game");
 //
+//SFMLGraphics::SFMLGraphics() : window(sf::VideoMode(800, 600), "SFML Game") {
 //    if (!font.loadFromFile("arial.ttf")) {
-//        std::cout << "Failed to load font file!" << std::endl;
+//        // error handling
 //    }
+//    text.setFont(font);
+//    text.setCharacterSize(24);
+//    text.setFillColor(sf::Color::White);
 //
-//    scoreText.setFont(font);
-//    scoreText.setCharacterSize(24);
-//    scoreText.setFillColor(sf::Color::White);
-//    scoreText.setPosition(10, 10);
+//    loadTextures();
 //}
 //
-//void SFMLGraphics::drawShape(Shape shape) {
-//    // Implement drawing logic for shapes using SFML
-//}
+//void SFMLGraphics::display(ShapeList& shapeList, Shape currentShape, Shape nextShape, int currentScore, int topScore) {
+//    window.clear();
 //
-//void SFMLGraphics::drawScore(int score) {
-//    scoreText.setString("Score: " + std::to_string(score));
-//    window.draw(scoreText);
-//}
+//    // Display current score and top score
+//    text.setString("Current Score: " + std::to_string(currentScore));
+//    text.setPosition(10, 10);
+//    window.draw(text);
 //
-//void SFMLGraphics::display() {
+//    text.setString("Top Score: " + std::to_string(topScore));
+//    text.setPosition(10, 40);
+//    window.draw(text);
+//
+//    // Display current and next shapes
+//    switch (currentShape.type) {
+//    case SQUARE:
+//        currentShapeSprite.setTexture(squareTexture);
+//        break;
+//    case CIRCLE:
+//        currentShapeSprite.setTexture(circleTexture);
+//        break;
+//    case TRIANGLE:
+//        currentShapeSprite.setTexture(triangleTexture);
+//        break;
+//    case RECTANGLE:
+//        currentShapeSprite.setTexture(rectangleTexture);
+//        break;
+//    }
+//    currentShapeSprite.setPosition(200, 200);
+//    window.draw(currentShapeSprite);
+//
+//    // Similar process for next shape...
+//
+//    // Display shape list
+//    // You'll need to iterate through the shape list and draw each shape
+//
 //    window.display();
 //}
 //
-//bool SFMLGraphics::isOpen() {
-//    return window.isOpen();
+//int SFMLGraphics::getUserChoice() {
+//    sf::Event event;
+//    while (window.pollEvent(event)) {
+//        if (event.type == sf::Event::KeyPressed) {
+//            if (event.key.code == sf::Keyboard::Num1)
+//                return 1;
+//            else if (event.key.code == sf::Keyboard::Num2)
+//                return 2;
+//            else if (event.key.code == sf::Keyboard::Escape)
+//                return 0;
+//        }
+//    }
+//    return -1;
 //}
 //
-//void SFMLGraphics::clear() {
-//    window.clear();
-//}
-//
-//void SFMLGraphics::close() {
-//    window.close();
+//void SFMLGraphics::loadTextures() {
+//    // Load textures for shapes
+//    // Load squareTexture, circleTexture, triangleTexture, and rectangleTexture
 //}
