@@ -19,61 +19,6 @@ void swappos(Node* a, Node* b) {
 	b->data = temp;
 }
 
-void ShapeList::shiftcolor(int a) {
-    // get head jouj merate
-    Node* current = getHead();
-    Node* current1 = getHead();
-    // get head dyal list khasa b couleur
-    while (current->data.color != a) {
-		current = current->next;
-        current1 = current1->next;
-	}
-    Node* tail = nullptr;
-    // get tail dyal list khasa b couleur
-    while (current1->nextcouleur != nullptr ) {
-        current1 = current1->nextcouleur;
-        tail = current1; 
-    }
-
-
-	/*Node* tail = tailcoleur;
-    Node* current = headcoleur;*/
-    // b9a nswapi kola mera m3a element b numbre iteration
-    while (current != tail) {
-		swappos(current, tail);
-		current = current->nextcouleur;
-	}
-
-}
-
-void ShapeList::shiftform(int a) {
-    // get head jouj merate
-    Node* current = getHead();
-    Node* current1 = getHead();
-    // get head dyal list khasa b form
-    while (current->data.type != a) {
-        current = current->next;
-        current1 = current1->next;
-    }
-    Node* tail = nullptr;
-    // get tail dyal list khasa b form
-    while (current1->nextforme != nullptr) {
-        current1 = current1->nextforme;
-        tail = current1;
-    }
-
-
-    /*Node* tail = tailcoleur;
-    Node* current = headcoleur;*/
-    // b9a nswapi kola mera m3a element b numbre iteration
-    while (current != tail) {
-        swappos(current, tail);
-        current = current->nextforme;
-    }
-
-}
-
-
 void ShapeList::addToBeginning(Shape shape) {
     Console console;
     Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr };
@@ -82,39 +27,7 @@ void ShapeList::addToBeginning(Shape shape) {
     head = newNode;
     if (!tail)
         tail = head;
-
-    int count1 = 0, count2 = 0;
-    Node* current = head->next;
-    while (current != nullptr ) {
-        
-        if (count1 == 0)
-        {  
-                
-
-            if (current->data.color == newNode->data.color) {
-                        newNode->nextcouleur = current;
-                        current->prevcouleur = newNode;
-                        count1 = 1;
-                       
-            }
-        }
-
-        if (count2 == 0)
-        {    	
-                
-
-            if (current->data.type == newNode->data.type) {
-                newNode->nextforme = current;
-                current->prevforme = newNode;
-                count2 = 1;
-               
-            }
-        }
-        
-        current = current->next;
-    }
 }
-
 
 void ShapeList::addToEnd(Shape shape) {
     Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr };
@@ -122,33 +35,7 @@ void ShapeList::addToEnd(Shape shape) {
         tail->next = newNode;
     tail = newNode;
     if (!head)
-      head = tail;
-   
-    Node* current = tail->prev;
-    int count1 = 0 , count2 = 0;
-    while (current != nullptr) {
-        if(count1==0){
-            if (current->data.color == newNode->data.color) {
-                newNode->prevcouleur= current;
-                current->nextcouleur = newNode;
-                count1 = 1;
-                
-            }
-        }
-
-        if (count2 == 0) {
-            if (current->data.type == newNode->data.type) {
-                newNode->prevforme = current;
-                current->nextforme = newNode;
-
-                count2 = 1;
-                
-            }
-        }
-        
-        
-        current = current->prev;
-    }
+        head = tail;
 }
 
 void ShapeList::displayList() {
