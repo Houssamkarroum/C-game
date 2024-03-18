@@ -18,6 +18,7 @@ const int BLUE = 1;
 const int GREEN = 2;
 const int YELLOW = 3;
 
+
 // Define struct for Shape
 struct Shape {
     int type;

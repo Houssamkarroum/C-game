@@ -20,7 +20,7 @@ void swappos(Node* a, Node* b) {
 }
 
 void ShapeList::shiftcolor(int a) {
-    // get head jouj merate
+    // get head jouj merate    
     Node* current = getHead();
     Node* current1 = getHead();
     // get head dyal list khasa b couleur
@@ -61,8 +61,6 @@ void ShapeList::shiftform(int a) {
         current1 = current1->nextforme;
         tail = current1;
     }
-
-
     /*Node* tail = tailcoleur;
     Node* current = headcoleur;*/
     // b9a nswapi kola mera m3a element b numbre iteration
@@ -166,42 +164,141 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
     }
 
     Node* current = head;
-    Node* prev = nullptr;
-
-    // Traverse the list
     while (current != nullptr && current->next != nullptr && current->next->next != nullptr) {
+
         // Check if there are three consecutive pieces with the same type or color
         if ((current->data.type == current->next->data.type && current->next->data.type == current->next->next->data.type) ||
             (current->data.color == current->next->data.color && current->next->data.color == current->next->next->data.color)) {
-            // Remove the three consecutive pieces
-            Node* temp = current->next->next->next;
-            delete current->next->next;
-            delete current->next;
-            if (prev == nullptr) {
-                // If the deleted pieces were at the beginning of the list
-                head = temp;
-                if (temp) {
-                    temp->prev = nullptr; // Update the prev pointer of the new head
-                }
+
+            Node* first = current;
+            Node* second = first->next;
+            Node* third = second->next;
+
+            // Update the head pointer to skip the first three nodes
+            if (first == head) {
+                head = third->next;
+                if (head)
+                    head->prev = nullptr; // Update the prev pointer of the new head
+                // Update the next and prev pointers of the color/form lists in the beginning
+                if (first->nextcouleur)
+                    first->nextcouleur->prevcouleur = nullptr;
+                if (first->nextforme)
+                    first->nextforme->prevforme = nullptr;
+                if (second->nextcouleur)
+                    second->nextcouleur->prevcouleur = nullptr;
+                if (second->nextforme)
+                    second->nextforme->prevforme = nullptr;
+                if (third->nextcouleur)
+                    third->nextcouleur->prevcouleur = nullptr;
+                if (third->nextforme)
+                    third->nextforme->prevforme = nullptr;
+
             }
             else {
-                // Update the pointers
-                prev->next = temp;
-                if (temp) {
-                    temp->prev = prev;
+                first->prev->next = third->next; // Update the next pointer of the previous node
+                if (third->next) {
+                    third->next->prev = first->prev; // Update the prev pointer of the next node
+                    // Update the next and prev pointers of the color/form lists in the middle
+                    if (first->nextcouleur && first->prevcouleur) {
+                        first->nextcouleur->prevcouleur = first->prevcouleur;
+                        first->prevcouleur->nextcouleur = first->nextcouleur;
+                    }
+                    else if (first->nextcouleur) {
+                        first->nextcouleur->prevcouleur = nullptr;
+                    }
+                    else {
+                        first->prevcouleur->nextcouleur = nullptr;
+                    }
+                    if (first->nextforme && first->prevforme) {
+                        first->nextforme->prevforme = first->prevforme;
+                        first->prevforme->nextforme = first->nextforme;
+                    }
+                    else if (first->nextforme) {
+                        first->nextforme->prevforme = nullptr;
+                    }
+                    else {
+                        first->prevforme->nextforme = nullptr;
+                    }
+
+                    if (second->nextcouleur && second->prevcouleur) {
+                        second->nextcouleur->prevcouleur = second->prevcouleur;
+                        second->prevcouleur->nextcouleur = second->nextcouleur;
+                    }
+                    else if (second->nextcouleur) {
+                        second->nextcouleur->prevcouleur = nullptr;
+                    }
+                    else {
+                        second->prevcouleur->nextcouleur = nullptr;
+                    }
+                    if (second->nextforme && second->prevforme) {
+                        second->nextforme->prevforme = second->prevforme;
+                        second->prevforme->nextforme = second->nextforme;
+                    }
+                    else if (second->nextforme) {
+                        second->nextforme->prevforme = nullptr;
+                    }
+                    else {
+                        second->prevforme->nextforme = nullptr;
+                    }
+
+                    if (third->nextcouleur && third->prevcouleur) {
+                        third->nextcouleur->prevcouleur = third->prevcouleur;
+                        third->prevcouleur->nextcouleur = third->nextcouleur;
+                    }
+                    else if (third->nextcouleur) {
+                        third->nextcouleur->prevcouleur = nullptr;
+                    }
+                    else {
+                        third->prevcouleur->nextcouleur = nullptr;
+                    }
+                    if (third->nextforme && third->prevforme) {
+                        third->nextforme->prevforme = third->prevforme;
+                        third->prevforme->nextforme = third->nextforme;
+                    }
+                    else if (third->nextforme) {
+                        third->nextforme->prevforme = nullptr;
+                    }
+                    else {
+                        third->prevforme->nextforme = nullptr;
+                    }
+
+                }
+                else {
+                    tail = first->prev;
+                    // Update the next and prev pointers of the color/form lists in the end
+                    if (first->prevcouleur)
+                        first->prevcouleur->prevcouleur = nullptr;
+                    if (first->prevforme)
+                        first->prevforme->nextforme = nullptr;
+                    if (second->prevcouleur)
+                        second->prevcouleur->prevcouleur = nullptr;
+                    if (second->prevforme)
+                        second->prevforme->nextforme = nullptr;
+                    if (third->prevcouleur)
+                        third->prevcouleur->prevcouleur = nullptr;
+                    if (third->prevforme)
+                        third->prevforme->nextforme = nullptr;
                 }
             }
+
+            // Move to the next node to continue checking for patterns
+            current = third->next;
+
+
+            // Delete the first three nodes
+            delete first;
+            delete second;
+            delete third;
+
+            // Update the score
             score += 300;
-            current = temp;
         }
         else {
             // Move to the next node
-            prev = current;
             current = current->next;
         }
     }
 }
-
 
 
 Node* ShapeList::getHead() const {

@@ -11,6 +11,7 @@ private:
     int topScore;
 
 public:
+    void console_game();
     int getLastScore() const;
     int getTopScore() const;
     void setTopScore(int score);
