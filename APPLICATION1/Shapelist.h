@@ -5,6 +5,7 @@
 #include <fstream> // For file input/output
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <map>
 
 // Define integer constants for shape type
 const int SQUARE = 0;
@@ -27,6 +28,7 @@ struct Shape {
 };
 
 // Define struct for Node
+
 struct Node {
     Shape data;
     Node* next;
@@ -47,7 +49,8 @@ private:
     int topScore;
 
 public:
-    
+    Node* headcolor[4];
+    Node* headshape[4];
     ShapeList();
     ~ShapeList();
     void addToBeginning(Shape shape);
@@ -64,7 +67,8 @@ public:
     void updateScores(); // Method to update the score
     void readScoresFromFile(const std::string& filename);
     void writeScoresToFile(const std::string& filename);
-    void createScoresFile(const std::string& filename); // Method to return the score
+    void createScoresFile(const std::string& filename);
+    // Method to return the score
 };
  
 #endif // SHAPE_LIST_H

@@ -1,6 +1,5 @@
 ﻿#include "ShapeList.h"
 #include <iostream>
-#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <Windows.h>
 #include "console.h"
@@ -40,6 +39,7 @@ void ShapeList::shiftcolor(int a) {
     Node* current = headcoleur;*/
     // b9a nswapi kola mera m3a element b numbre iteration
     while (current != tail) {
+
         swappos(current, tail);
         current = current->nextcouleur;
     }
@@ -73,13 +73,21 @@ void ShapeList::shiftform(int a) {
 
 
 void ShapeList::addToBeginning(Shape shape) {
-    Console console;
-    Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr };
+    
+    Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr,nullptr,nullptr };
     if (head)
         head->prev = newNode;
     head = newNode;
     if (!tail)
         tail = head;
+    
+        newNode->nextcouleur = newNode;
+        newNode->prevcouleur = newNode;
+
+    
+        newNode->nextforme = newNode;
+        newNode->prevforme = newNode;
+    
 
     int count1 = 0, count2 = 0;
     Node* current = head->next;
@@ -87,21 +95,20 @@ void ShapeList::addToBeginning(Shape shape) {
 
         if (count1 == 0)
         {
-
-
             if (current->data.color == newNode->data.color) {
+                current->prevcouleur->nextcouleur = newNode;
+                newNode->prevcouleur = current->prevcouleur;
                 newNode->nextcouleur = current;
                 current->prevcouleur = newNode;
                 count1 = 1;
 
             }
         }
-
         if (count2 == 0)
         {
-
-
             if (current->data.type == newNode->data.type) {
+                current->prevforme->nextforme = newNode;
+                newNode->prevforme = current->prevforme;
                 newNode->nextforme = current;
                 current->prevforme = newNode;
                 count2 = 1;
@@ -111,41 +118,67 @@ void ShapeList::addToBeginning(Shape shape) {
 
         current = current->next;
     }
+    
+    // enregstrer head of color and forme
+    headcolor[newNode->data.color] = newNode;
+    headshape[newNode->data.type] = newNode;
 }
 
 
 void ShapeList::addToEnd(Shape shape) {
-    Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr };
+    Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr, nullptr ,nullptr };
     if (tail)
         tail->next = newNode;
     tail = newNode;
     if (!head)
         head = tail;
 
+    newNode->nextcouleur = newNode;
+    newNode->prevcouleur = newNode;
+    newNode->nextforme = newNode;
+    newNode->prevforme = newNode;
+    // for not comparing it with itself
     Node* current = tail->prev;
-    int count1 = 0, count2 = 0;
+    int count1 = 0, count2 = 0 , count3=0 , count4 = 0;
     while (current != nullptr) {
         if (count1 == 0) {
             if (current->data.color == newNode->data.color) {
+                current->nextcouleur->prevcouleur = newNode;
+                newNode->nextcouleur = current->nextcouleur;
                 newNode->prevcouleur = current;
                 current->nextcouleur = newNode;
                 count1 = 1;
-
             }
         }
+        
 
         if (count2 == 0) {
             if (current->data.type == newNode->data.type) {
+                current->nextforme->prevforme = newNode;
+                newNode->nextforme = current->nextforme;
                 newNode->prevforme = current;
                 current->nextforme = newNode;
-
                 count2 = 1;
-
             }
         }
+        
+            if (newNode->data.type == current->data.type) {
+                
+                count3 = 1;
+            }
+            if (newNode->data.color == current->data.color) {
 
+                count4 = 1;
+            }
+        
 
         current = current->prev;
+    }
+    if (count3 == 0) {
+        headshape[newNode->data.type] = newNode;
+    }
+    if (count4 == 0) {
+        headcolor[newNode->data.color] = newNode;
     }
 }
 
@@ -162,10 +195,9 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
         // If the list contains fewer than three elements, there are no patterns to check
         return;
     }
-
+    int a;
     Node* current = head;
     while (current != nullptr && current->next != nullptr && current->next->next != nullptr) {
-
         // Check if there are three consecutive pieces with the same type or color
         if ((current->data.type == current->next->data.type && current->next->data.type == current->next->next->data.type) ||
             (current->data.color == current->next->data.color && current->next->data.color == current->next->next->data.color)) {
@@ -180,18 +212,47 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
                 if (head)
                     head->prev = nullptr; // Update the prev pointer of the new head
                 // Update the next and prev pointers of the color/form lists in the beginning
-                if (first->nextcouleur)
-                    first->nextcouleur->prevcouleur = nullptr;
-                if (first->nextforme)
-                    first->nextforme->prevforme = nullptr;
-                if (second->nextcouleur)
-                    second->nextcouleur->prevcouleur = nullptr;
-                if (second->nextforme)
-                    second->nextforme->prevforme = nullptr;
-                if (third->nextcouleur)
-                    third->nextcouleur->prevcouleur = nullptr;
-                if (third->nextforme)
-                    third->nextforme->prevforme = nullptr;
+                if (first->nextcouleur) {
+                    a = first->data.color;
+                    first->nextcouleur->prevcouleur = headcolor[a]->prevcouleur;
+                    headcolor[a]->prevcouleur->nextcouleur = first->nextcouleur ;
+                    headcolor[a] = first->nextcouleur;
+                }
+                if (first->nextforme){
+                    a = first->data.type;
+                    first->nextforme->prevforme = headshape[a]->prevforme;
+                    headshape[a]->prevforme->nextforme = first->nextforme;
+                    headshape[a] = first->nextforme;
+                }
+                    
+                if (second->nextcouleur) {
+                    a = first->data.color;
+                    second->nextcouleur->prevcouleur = headcolor[a]->prevcouleur;
+                    headcolor[a]->prevcouleur->nextcouleur = second->nextcouleur;
+                    headcolor[a] = second->nextcouleur;
+                }
+                    
+                if (second->nextforme) {
+                    a = first->data.type;
+                    second->nextforme->prevforme = headshape[a]->prevforme;
+                    headshape[a]->prevforme->nextforme = second->nextforme;
+                    headshape[a] = second->nextforme;
+                }
+                    
+                if (third->nextcouleur) {
+                    a = first->data.color;
+                    third->nextcouleur->prevcouleur = headcolor[a]->prevcouleur;
+                    headcolor[a]->prevcouleur->nextcouleur = third->nextcouleur;
+                    headcolor[a] = third->nextcouleur;
+                }
+                    
+                if (third->nextforme){
+                    
+                    a = third->data.type;
+                    third->nextforme->prevforme = headshape[a]->prevforme;
+                    headshape[a]->prevforme->nextforme = third->nextforme;
+                    headshape[a] = third->nextforme;
+                }       
 
             }
             else {
@@ -266,18 +327,41 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
                 else {
                     tail = first->prev;
                     // Update the next and prev pointers of the color/form lists in the end
-                    if (first->prevcouleur)
-                        first->prevcouleur->prevcouleur = nullptr;
-                    if (first->prevforme)
-                        first->prevforme->nextforme = nullptr;
-                    if (second->prevcouleur)
-                        second->prevcouleur->prevcouleur = nullptr;
-                    if (second->prevforme)
-                        second->prevforme->nextforme = nullptr;
-                    if (third->prevcouleur)
-                        third->prevcouleur->prevcouleur = nullptr;
-                    if (third->prevforme)
-                        third->prevforme->nextforme = nullptr;
+                    
+                    
+                   if (third->prevforme) {
+                        a = third->data.type;
+                        third->prevforme->nextforme = headshape[a];
+                        headshape[a]->prevforme = third->prevforme;
+                    }
+                   if (third->prevcouleur) {
+                            a = third->data.color;
+                            third->prevcouleur->nextcouleur = headcolor[a];
+                            headcolor[a]->prevcouleur = third->prevcouleur;
+                    }
+                   if (second->prevforme) {
+                            a = second->data.type;
+                            second->prevforme->nextforme = headshape[a];
+                            headshape[a]->prevforme = second->prevforme;
+
+                   }
+                   if (second->prevcouleur) {
+                            a = second->data.color;
+                            second->prevcouleur->nextcouleur = headcolor[a];
+                            headcolor[a]->prevcouleur = second->prevcouleur;
+                   }
+                   if (first->prevforme) {
+                                a = first->data.type;
+                                first->prevforme->nextforme = headshape[a];
+                                headshape[a]->prevforme = first->prevforme;
+
+                   }
+                    if (first->prevcouleur) {
+                        a = first->data.color;
+                        first->prevcouleur->nextcouleur = headcolor[a];
+                        headcolor[a]->prevcouleur = first->prevcouleur;
+
+                    }
                 }
             }
 
