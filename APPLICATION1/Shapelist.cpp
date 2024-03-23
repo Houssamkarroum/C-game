@@ -137,7 +137,7 @@ void ShapeList::addToEnd(Shape shape) {
         newNode->nextcouleur = last_color_item->nextcouleur;
         newNode->prevcouleur = last_color_item;
         last_color_item->nextcouleur = newNode;
-        headcolor[newNode->data.color] = newNode;
+        
     }
     else {
         headcolor[newNode->data.color] = newNode;
@@ -154,7 +154,7 @@ void ShapeList::addToEnd(Shape shape) {
         newNode->prevforme = last_form_item;
         last_form_item->nextforme = newNode;
 
-        headshape[newNode->data.color] = newNode;
+        
     }
     else
     {
