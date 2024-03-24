@@ -8,15 +8,51 @@ ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0)
     readScoresFromFile("scores.txt"); // Read scores from file when creating ShapeList
 }
 
-void swappos(Node* a, Node* b) {
-    if (a == nullptr || b == nullptr) {
-        // Handle the error, e.g., by returning from the function
-        return;
-    }
-    Shape temp = a->data;
-    a->data = b->data;
-    b->data = temp;
-}
+//void SwapNodes(Node* itemNbr1, Node* itemNbr2)
+//{
+//    // Handle if either of the nodes is NULL or if they are the same node
+//    if (!itemNbr1 || !itemNbr2 || itemNbr1 == itemNbr2)
+//        return;
+//
+//    // Swap next pointers
+//    Node* tempNext = itemNbr1->next;
+//    itemNbr1->next = itemNbr2->next;
+//    itemNbr2->next = tempNext;
+//
+//    if (itemNbr1->next)
+//        itemNbr1->next->prev = itemNbr1;
+//    if (itemNbr2->next)
+//        itemNbr2->next->prev = itemNbr2;
+//
+//    if (itemNbr1->prev == itemNbr2)
+//    { // Handling adjacent nodes
+//        itemNbr2->prev = itemNbr1->prev;
+//        itemNbr1->prev = itemNbr2;
+//    }
+//    else
+//    {
+//        Node* tempPrev = itemNbr1->prev;
+//        itemNbr1->prev = itemNbr2->prev;
+//        itemNbr2->prev = tempPrev;
+//    }
+//
+//    if (itemNbr1->prev)
+//        itemNbr1->prev->next = itemNbr1;
+//    if (itemNbr2->prev)
+//        itemNbr2->prev->prev = itemNbr2;
+//
+//    // Update head if necessary
+//    if (itemNbr1 == Head)
+//        Head = itemNbr2;
+//    else if (itemNbr2 == Head)
+//        Head = itemNbr1;
+//
+//    // Update tail if necessary
+//    if (itemNbr1 == Tail)
+//        Tail = itemNbr2;
+//    else if (itemNbr2 == Tail)
+//        Tail = itemNbr1;
+//}
 
 void ShapeList::shiftcolor(int a) {
     // get head jouj merate    
@@ -40,7 +76,7 @@ void ShapeList::shiftcolor(int a) {
     // b9a nswapi kola mera m3a element b numbre iteration
     while (current != tail) {
 
-        swappos(current, tail);
+       /* swappos(current, tail);*/
         current = current->nextcouleur;
     }
 
@@ -65,12 +101,11 @@ void ShapeList::shiftform(int a) {
     Node* current = headcoleur;*/
     // b9a nswapi kola mera m3a element b numbre iteration
     while (current != tail) {
-        swappos(current, tail);
+       /* swappos(current, tail);*/
         current = current->nextforme;
     }
 
 }
-
 
 void ShapeList::addToBeginning(Shape shape) {
     
@@ -198,152 +233,141 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
                 if (first->nextcouleur) {
                     a = first->data.color;
                     first->nextcouleur->prevcouleur = headcolor[a]->prevcouleur;
-                    headcolor[a]->prevcouleur->nextcouleur = first->nextcouleur ;
+                    headcolor[a]->prevcouleur->nextcouleur = first->nextcouleur;
                     headcolor[a] = first->nextcouleur;
                 }
-                if (first->nextforme){
+                if (first->nextforme) {
                     a = first->data.type;
                     first->nextforme->prevforme = headshape[a]->prevforme;
                     headshape[a]->prevforme->nextforme = first->nextforme;
                     headshape[a] = first->nextforme;
                 }
-                    
+
                 if (second->nextcouleur) {
-                    a = first->data.color;
+                    a = second->data.color;
                     second->nextcouleur->prevcouleur = headcolor[a]->prevcouleur;
                     headcolor[a]->prevcouleur->nextcouleur = second->nextcouleur;
                     headcolor[a] = second->nextcouleur;
                 }
-                    
                 if (second->nextforme) {
-                    a = first->data.type;
+                    a = second->data.type;
                     second->nextforme->prevforme = headshape[a]->prevforme;
                     headshape[a]->prevforme->nextforme = second->nextforme;
                     headshape[a] = second->nextforme;
                 }
-                    
+
                 if (third->nextcouleur) {
-                    a = first->data.color;
+                    a = third->data.color;
                     third->nextcouleur->prevcouleur = headcolor[a]->prevcouleur;
                     headcolor[a]->prevcouleur->nextcouleur = third->nextcouleur;
                     headcolor[a] = third->nextcouleur;
                 }
-                    
-                if (third->nextforme){
-                    
+                if (third->nextforme) {
                     a = third->data.type;
                     third->nextforme->prevforme = headshape[a]->prevforme;
                     headshape[a]->prevforme->nextforme = third->nextforme;
                     headshape[a] = third->nextforme;
-                }       
+                }
 
             }
+
             else {
                 first->prev->next = third->next; // Update the next pointer of the previous node
+
                 if (third->next) {
                     third->next->prev = first->prev; // Update the prev pointer of the next node
+
                     // Update the next and prev pointers of the color/form lists in the middle
                     if (first->nextcouleur && first->prevcouleur) {
-                        first->nextcouleur->prevcouleur = first->prevcouleur;
                         first->prevcouleur->nextcouleur = first->nextcouleur;
+                        first->prevcouleur->prevcouleur = first->nextcouleur;
+                        first->nextcouleur->prevcouleur = first->prevcouleur;
+                        first->nextcouleur->nextcouleur = first->prevcouleur;
+                        if (first == headcolor[first->data.color])
+                            headcolor[first->data.color] = first->nextcouleur;
                     }
-                    else if (first->nextcouleur) {
-                        first->nextcouleur->prevcouleur = nullptr;
-                    }
-                    else {
-                        first->prevcouleur->nextcouleur = nullptr;
-                    }
+
                     if (first->nextforme && first->prevforme) {
-                        first->nextforme->prevforme = first->prevforme;
                         first->prevforme->nextforme = first->nextforme;
-                    }
-                    else if (first->nextforme) {
-                        first->nextforme->prevforme = nullptr;
-                    }
-                    else {
-                        first->prevforme->nextforme = nullptr;
+                        first->prevforme->prevforme = first->nextforme;
+                        first->nextforme->prevforme = first->prevforme;
+                        first->nextforme->nextforme = first->prevforme;
+                        if (first == headshape[first->data.color])
+                            headshape[first->data.color] = first->nextforme;
                     }
 
                     if (second->nextcouleur && second->prevcouleur) {
-                        second->nextcouleur->prevcouleur = second->prevcouleur;
                         second->prevcouleur->nextcouleur = second->nextcouleur;
+                        second->prevcouleur->prevcouleur = second->nextcouleur;
+                        second->nextcouleur->prevcouleur = second->prevcouleur;
+                        second->nextcouleur->nextcouleur = second->prevcouleur;
+                        if (second == headcolor[second->data.color])
+                            headcolor[second->data.color] = second->nextcouleur;
                     }
-                    else if (second->nextcouleur) {
-                        second->nextcouleur->prevcouleur = nullptr;
-                    }
-                    else {
-                        second->prevcouleur->nextcouleur = nullptr;
-                    }
+
                     if (second->nextforme && second->prevforme) {
-                        second->nextforme->prevforme = second->prevforme;
                         second->prevforme->nextforme = second->nextforme;
-                    }
-                    else if (second->nextforme) {
-                        second->nextforme->prevforme = nullptr;
-                    }
-                    else {
-                        second->prevforme->nextforme = nullptr;
+                        second->prevforme->prevforme = second->nextforme;
+                        second->nextforme->prevforme = second->prevforme;
+                        second->nextforme->nextforme = second->prevforme;
+                        if (second == headshape[second->data.color])
+                            headshape[second->data.color] = second->nextforme;
                     }
 
                     if (third->nextcouleur && third->prevcouleur) {
-                        third->nextcouleur->prevcouleur = third->prevcouleur;
                         third->prevcouleur->nextcouleur = third->nextcouleur;
-                    }
-                    else if (third->nextcouleur) {
-                        third->nextcouleur->prevcouleur = nullptr;
-                    }
-                    else {
-                        third->prevcouleur->nextcouleur = nullptr;
-                    }
-                    if (third->nextforme && third->prevforme) {
-                        third->nextforme->prevforme = third->prevforme;
-                        third->prevforme->nextforme = third->nextforme;
-                    }
-                    else if (third->nextforme) {
-                        third->nextforme->prevforme = nullptr;
-                    }
-                    else {
-                        third->prevforme->nextforme = nullptr;
+                        third->prevcouleur->prevcouleur = third->nextcouleur;
+                        third->nextcouleur->prevcouleur = third->prevcouleur;
+                        third->nextcouleur->nextcouleur = third->prevcouleur;
+                        if (third == headcolor[third->data.color])
+                            headcolor[third->data.color] = third->nextcouleur;
                     }
 
+                    if (third->nextforme && third->prevforme) {
+                        third->prevforme->nextforme = third->nextforme;
+                        third->prevforme->prevforme = third->nextforme;
+                        third->nextforme->prevforme = third->prevforme;
+                        third->nextforme->nextforme = third->prevforme;
+                        if (third == headshape[third->data.color])
+                            headshape[third->data.color] = third->nextforme;
+                    }
                 }
+
                 else {
                     tail = first->prev;
+
                     // Update the next and prev pointers of the color/form lists in the end
-                    
-                    
-                   if (third->prevforme) {
+                    if (third->prevforme) {
                         a = third->data.type;
                         third->prevforme->nextforme = headshape[a];
                         headshape[a]->prevforme = third->prevforme;
                     }
-                   if (third->prevcouleur) {
-                            a = third->data.color;
-                            third->prevcouleur->nextcouleur = headcolor[a];
-                            headcolor[a]->prevcouleur = third->prevcouleur;
+                    if (third->prevcouleur) {
+                        a = third->data.color;
+                        third->prevcouleur->nextcouleur = headcolor[a];
+                        headcolor[a]->prevcouleur = third->prevcouleur;
                     }
-                   if (second->prevforme) {
-                            a = second->data.type;
-                            second->prevforme->nextforme = headshape[a];
-                            headshape[a]->prevforme = second->prevforme;
 
-                   }
-                   if (second->prevcouleur) {
-                            a = second->data.color;
-                            second->prevcouleur->nextcouleur = headcolor[a];
-                            headcolor[a]->prevcouleur = second->prevcouleur;
-                   }
-                   if (first->prevforme) {
-                                a = first->data.type;
-                                first->prevforme->nextforme = headshape[a];
-                                headshape[a]->prevforme = first->prevforme;
+                    if (second->prevforme) {
+                        a = second->data.type;
+                        second->prevforme->nextforme = headshape[a];
+                        headshape[a]->prevforme = second->prevforme;
+                    }
+                    if (second->prevcouleur) {
+                        a = second->data.color;
+                        second->prevcouleur->nextcouleur = headcolor[a];
+                        headcolor[a]->prevcouleur = second->prevcouleur;
+                    }
 
-                   }
+                    if (first->prevforme) {
+                        a = first->data.type;
+                        first->prevforme->nextforme = headshape[a];
+                        headshape[a]->prevforme = first->prevforme;
+                    }
                     if (first->prevcouleur) {
                         a = first->data.color;
                         first->prevcouleur->nextcouleur = headcolor[a];
                         headcolor[a]->prevcouleur = first->prevcouleur;
-
                     }
                 }
             }
@@ -352,14 +376,38 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
             current = third->next;
 
 
-            // Delete the first three nodes
+            // Delete the three nodes and delete the head pointers of the color/form lists if necessary
+            if (first == headshape[first->data.type] && headshape[first->data.type]->nextforme == headshape[first->data.type]) {
+                headshape[first->data.type] = nullptr;
+            }
+            if (first == headcolor[first->data.color] && headcolor[first->data.color]->nextforme == headcolor[first->data.color]) {
+                headcolor[first->data.color] = nullptr;
+            }
             delete first;
+
+
+            if (second == headshape[second->data.type] && headshape[second->data.type]->nextforme == headshape[second->data.type]) {
+                headshape[second->data.type] = nullptr;
+            }
+            if (second == headcolor[second->data.color] && headcolor[second->data.color]->nextforme == headcolor[second->data.color]) {
+                headcolor[second->data.color] = nullptr;
+            }
             delete second;
+
+
+            if (third == headshape[third->data.type] && headshape[third->data.type]->nextforme == headshape[third->data.type]) {
+                headshape[third->data.type] = nullptr;
+            }
+            if (third == headcolor[third->data.color] && headcolor[third->data.color]->nextforme == headcolor[third->data.color]) {
+                headcolor[third->data.color] = nullptr;
+            }
             delete third;
+
 
             // Update the score
             score += 300;
         }
+
         else {
             // Move to the next node
             current = current->next;
