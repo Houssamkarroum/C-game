@@ -76,7 +76,7 @@ void ShapeList::shiftcolor(int a) {
     // b9a nswapi kola mera m3a element b numbre iteration
     while (current != tail) {
 
-       /* swappos(current, tail);*/
+        /* swappos(current, tail);*/
         current = current->nextcouleur;
     }
 
@@ -101,53 +101,53 @@ void ShapeList::shiftform(int a) {
     Node* current = headcoleur;*/
     // b9a nswapi kola mera m3a element b numbre iteration
     while (current != tail) {
-       /* swappos(current, tail);*/
+        /* swappos(current, tail);*/
         current = current->nextforme;
     }
 
 }
 
 void ShapeList::addToBeginning(Shape shape) {
-    
+
     Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr,nullptr,nullptr };
     if (head)
         head->prev = newNode;
     head = newNode;
     if (!tail)
         tail = head;
-    
-        newNode->nextcouleur = newNode;
-        newNode->prevcouleur = newNode;
 
-   
-        newNode->nextforme = newNode;
-        newNode->prevforme = newNode;
+    newNode->nextcouleur = newNode;
+    newNode->prevcouleur = newNode;
 
-        if (headcolor[newNode->data.color]) {
-			headcolor[newNode->data.color]->prevcouleur->nextcouleur = newNode;
-			newNode->prevcouleur = headcolor[newNode->data.color]->prevcouleur;
-			newNode->nextcouleur = headcolor[newNode->data.color];
-			headcolor[newNode->data.color]->prevcouleur = newNode;
-			headcolor[newNode->data.color] = newNode;
-		}
-        else {
-			headcolor[newNode->data.color] = newNode;
-		}   
-    
-// forme 
-        if (headshape[newNode->data.type]) {
+
+    newNode->nextforme = newNode;
+    newNode->prevforme = newNode;
+
+    if (headcolor[newNode->data.color]) {
+        headcolor[newNode->data.color]->prevcouleur->nextcouleur = newNode;
+        newNode->prevcouleur = headcolor[newNode->data.color]->prevcouleur;
+        newNode->nextcouleur = headcolor[newNode->data.color];
+        headcolor[newNode->data.color]->prevcouleur = newNode;
+        headcolor[newNode->data.color] = newNode;
+    }
+    else {
+        headcolor[newNode->data.color] = newNode;
+    }
+
+    // forme 
+    if (headshape[newNode->data.type]) {
         headshape[newNode->data.type]->prevforme->nextforme = newNode;
         newNode->prevforme = headshape[newNode->data.type]->prevforme;
         newNode->nextforme = headshape[newNode->data.type];
         headshape[newNode->data.type]->prevforme = newNode;
         headshape[newNode->data.type] = newNode;
-        }
-        else
-        {
-			headshape[newNode->data.type] = newNode;
+    }
+    else
+    {
+        headshape[newNode->data.type] = newNode;
 
-        }   
-  
+    }
+
 }
 
 
@@ -164,7 +164,7 @@ void ShapeList::addToEnd(Shape shape) {
     newNode->nextforme = newNode;
     newNode->prevforme = newNode;
 
-   
+
 
     if (headcolor[newNode->data.color]) {
         Node* last_color_item = headcolor[newNode->data.color]->prevcouleur;
@@ -172,14 +172,14 @@ void ShapeList::addToEnd(Shape shape) {
         newNode->nextcouleur = last_color_item->nextcouleur;
         newNode->prevcouleur = last_color_item;
         last_color_item->nextcouleur = newNode;
-        
+
     }
     else {
         headcolor[newNode->data.color] = newNode;
     }
 
     // forme 
-    
+
 
     if (headshape[newNode->data.type]) {
         Node* last_form_item = headshape[newNode->data.type]->prevforme;
@@ -189,7 +189,7 @@ void ShapeList::addToEnd(Shape shape) {
         newNode->prevforme = last_form_item;
         last_form_item->nextforme = newNode;
 
-        
+
     }
     else
     {
@@ -197,7 +197,7 @@ void ShapeList::addToEnd(Shape shape) {
 
     }
     // for not comparing it with itself
-   
+
 }
 
 void ShapeList::displayList() {

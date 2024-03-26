@@ -14,7 +14,7 @@ using namespace std;
 
 void Console::console_game() {
     system("cls");
-    PlaySound(TEXT("launch.wav"), NULL, SND_SYNC);
+    //PlaySound(TEXT("launch.wav"), NULL, SND_SYNC);
     
 
     // Seed the random number generator
@@ -70,13 +70,13 @@ void Console::console_game() {
         else if (choice == 1) {
             // Add the current shape to the beginning of the list
             shapeList.addToBeginning(currentShape);
-            PlaySound(TEXT("sound.wav"), NULL, SND_SYNC);
+            //PlaySound(TEXT("sound.wav"), NULL, SND_SYNC);
 
         }
         else if (choice == 2) {
             // Add the current shape to the end of the list
             shapeList.addToEnd(currentShape);
-            PlaySound(TEXT("sound.wav"), NULL, SND_SYNC);
+            //PlaySound(TEXT("sound.wav"), NULL, SND_SYNC);
 
         }
         else if (choice == 3) {
@@ -98,7 +98,7 @@ void Console::console_game() {
 
         }
         else {
-            PlaySound(TEXT("chosefailed.wav"), NULL, SND_SYNC);
+            //PlaySound(TEXT("chosefailed.wav"), NULL, SND_SYNC);
             std::cout << "Invalid choice. Please enter '1', '2', or '0'." << std::endl;
             continue; // Skip the rest of the loop if choice is invalid
         }
@@ -326,7 +326,7 @@ void Console::afficheTimer(){
         }
     }
    
-    PlaySound(TEXT("timeup.wav"), NULL, SND_SYNC);
+    //PlaySound(TEXT("timeup.wav"), NULL, SND_SYNC);
     system("cls");
     gotoxy(55, 55);
     std::cout << "Time's up!" << std::endl;
@@ -334,12 +334,6 @@ void Console::afficheTimer(){
     gameOverScreen();
     exit(0);
 }
-
-
-
-
-
-
 
 
 // Function to display Tetris ASCII art line by line

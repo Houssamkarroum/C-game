@@ -1,21 +1,27 @@
-// sfml.h
-
 #ifndef SFML_H
 #define SFML_H
 
 #include <SFML/Graphics.hpp>
 #include "shapelist.h"
+#include "Console.h"
 
 class SFMLGraphics {
 private:
     sf::RenderWindow window;
+    void displayScore(sf::Text&, sf::RectangleShape&, sf::Font&, int, int);
+    void displayTime(sf::Text&, sf::RectangleShape&, sf::Font&, int);
+    void displayArrows(sf::RenderWindow&);
+    void displayCurrentShape(sf::Text&, sf::RectangleShape&, sf::Font&);
+    void displayNextShape(sf::Text&, sf::RectangleShape&, sf::Font&);
+    void displayShapeList(sf::RenderWindow&);
+    sf::Color getColorFromIndex(int);
+    sf::Drawable* createSFMLShape(const Shape&);
     ShapeList shapeList;
-    sf::Color getColorFromIndex(int colorIndex);
-    sf::Drawable* createSFMLShape(const Shape& shape);
-
+    Console console;
+        
 public:
-    SFMLGraphics();
-    void run();
+    void display();
+    void menu();
 };
 
-#endif // SFML_H
+#endif

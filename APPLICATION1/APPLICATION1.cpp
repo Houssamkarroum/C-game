@@ -11,16 +11,8 @@
 using namespace std;
 
 
-
-
-
-
-
 int main() {
-    Console c;
-    c.console_game();
-    /*SFMLGraphics app;
-    app.run();*/
-
+    SFMLGraphics app;
+    app.menu();
     return 0;
 }
