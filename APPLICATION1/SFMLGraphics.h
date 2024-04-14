@@ -8,12 +8,14 @@
 class SFMLGraphics {
 private:
     sf::RenderWindow window;
-    void displayScore(sf::Text&, sf::RectangleShape&, sf::Font&, int, int);
-    void displayTime(sf::Text&, sf::RectangleShape&, sf::Font&, int);
+    void displayScore(sf::Text&, sf::Font&,int, int);
+    void displayTime(sf::Text&, sf::Font&, int);
     void displayArrows(sf::RenderWindow&);
-    void displayCurrentShape(sf::Text&, sf::RectangleShape&, sf::Font&);
-    void displayNextShape(sf::Text&, sf::RectangleShape&, sf::Font&);
+    void displayCurrentShape(sf::Text&, sf::Font&);
+    void displayNextShape(sf::Text&, sf::Font&);
     void displayShapeList(sf::RenderWindow&);
+    void gameOver(sf::Text& , sf::Font&, sf::RenderWindow&);
+    void gamePaused(sf::Text&, sf::Font&, sf::RenderWindow&);
     sf::Color getColorFromIndex(int);
     sf::Drawable* createSFMLShape(const Shape&);
     ShapeList shapeList;

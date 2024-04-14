@@ -24,7 +24,7 @@ const int YELLOW = 3;
 struct Shape {
     int type;
     int color;
-    sf::Vector2f position;  
+    sf::Vector2f position;
 };
 
 // Define struct for Node
@@ -49,6 +49,7 @@ private:
     int topScore;
 
 public:
+    int size;
     Node* headcolor[4];
     Node* headshape[4];
     ShapeList();
@@ -58,17 +59,19 @@ public:
     void displayList();
     void shiftcolor(int );
     void shiftform(int);
-    void removeNodesWithSameColorOrType(int& score);
+    void removeNodesWithSameColorOrType();
 
     Node* getHead() const;
+    void setHead(Node*);
     int getLastScore() const;
     int getTopScore() const;
     void setTopScore(int score);
+    void setLastScore(int score);
+    void InitLastScore();
     void updateScores(); // Method to update the score
     void readScoresFromFile(const std::string& filename);
     void writeScoresToFile(const std::string& filename);
     void createScoresFile(const std::string& filename);
-    // Method to return the score
 };
  
 #endif // SHAPE_LIST_H
