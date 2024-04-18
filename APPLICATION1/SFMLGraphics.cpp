@@ -226,8 +226,8 @@ void SFMLGraphics::display() {
     // Create a sprite for the rules and set its texture
     sf::Sprite rulesSprite;
     rulesSprite.setTexture(rulesTexture);
-    rulesSprite.setPosition(sf::Vector2f(1005, 0));
-    rulesSprite.scale(sf::Vector2f(0.42, 0.7));
+    rulesSprite.setPosition(sf::Vector2f(1003, 80));
+    rulesSprite.scale(sf::Vector2f(0.5, 0.6));
 
     // Seed the random number generator
     std::srand(static_cast<unsigned>(std::time(nullptr)));
