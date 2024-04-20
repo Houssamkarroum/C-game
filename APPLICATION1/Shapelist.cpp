@@ -59,7 +59,7 @@ void ShapeList::shiftcolor(int a) {
     Node* current = getHead();
     Node* current1 = getHead();
     // get head dyal list khasa b couleur
-    while (current->data.color != a) {
+    while (current->data.color != a) {  
         current = current->next;
         current1 = current1->next;
     }
@@ -273,10 +273,8 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
 
             else {
                 first->prev->next = third->next; // Update the next pointer of the previous node
-
                 if (third->next) {
                     third->next->prev = first->prev; // Update the prev pointer of the next node
-
                     // Update the next and prev pointers of the color/form lists in the middle
                     if (first->nextcouleur && first->prevcouleur) {
                         first->prevcouleur->nextcouleur = first->nextcouleur;

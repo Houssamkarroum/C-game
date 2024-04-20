@@ -222,7 +222,7 @@ void SFMLGraphics::display() {
 
     // Load the font from a file
     sf::Font font;
-    if (!font.loadFromFile("D:/ENSET/S2/Projet/fonts/test.ttf")) {
+    if (!font.loadFromFile("C:/Users/LEGEND/Desktop/c++/APPLICATION1/fonts/test.ttf")) {
         // Error loading font
         std::cerr << "Failed to load font" << std::endl;
         return;
@@ -356,7 +356,7 @@ void SFMLGraphics::display() {
 MenuResult showMenu(sf::RenderWindow& window) {
     // Load font
     sf::Font font;
-    if (!font.loadFromFile("D:/ENSET/S2/Projet/fonts/test.ttf")) {
+    if (!font.loadFromFile("C:/Users/LEGEND/Desktop/c++/APPLICATION1/fonts/test.ttf")) {
         std::cerr << "Failed to load font." << std::endl;
         return Exit;
     }
