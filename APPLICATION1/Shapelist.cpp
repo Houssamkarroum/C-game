@@ -283,7 +283,7 @@ void ShapeList::removeNodesWithSameColorOrType() {
                     else if (first->nextcouleur) {
                         first->nextcouleur->prevcouleur = nullptr;
                     }
-                    else {
+                    else if(first->prevcouleur){
                         first->prevcouleur->nextcouleur = nullptr;
                     }
                     if (first->nextforme && first->prevforme) {
@@ -293,7 +293,7 @@ void ShapeList::removeNodesWithSameColorOrType() {
                     else if (first->nextforme) {
                         first->nextforme->prevforme = nullptr;
                     }
-                    else {
+                    else if(first->prevforme){
                         first->prevforme->nextforme = nullptr;
                     }
                     if (second->nextcouleur && second->prevcouleur) {
@@ -303,7 +303,7 @@ void ShapeList::removeNodesWithSameColorOrType() {
                     else if (second->nextcouleur) {
                         second->nextcouleur->prevcouleur = nullptr;
                     }
-                    else {
+                    else if(second->prevcouleur) {
                         second->prevcouleur->nextcouleur = nullptr;
                     }
                     if (second->nextforme && second->prevforme) {
@@ -313,7 +313,7 @@ void ShapeList::removeNodesWithSameColorOrType() {
                     else if (second->nextforme) {
                         second->nextforme->prevforme = nullptr;
                     }
-                    else {
+                    else if(second->prevforme){
                         second->prevforme->nextforme = nullptr;
                     }
 
@@ -324,7 +324,7 @@ void ShapeList::removeNodesWithSameColorOrType() {
                     else if (third->nextcouleur) {
                         third->nextcouleur->prevcouleur = nullptr;
                     }
-                    else {
+                    else if (third->prevcouleur) {
                         third->prevcouleur->nextcouleur = nullptr;
                     }
                     if (third->nextforme && third->prevforme) {
@@ -334,7 +334,7 @@ void ShapeList::removeNodesWithSameColorOrType() {
                     else if (third->nextforme) {
                         third->nextforme->prevforme = nullptr;
                     }
-                    else {
+                    else if(third->prevforme) {
                         third->prevforme->nextforme = nullptr;
                     }
 

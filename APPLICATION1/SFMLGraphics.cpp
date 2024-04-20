@@ -450,13 +450,13 @@ void SFMLGraphics::display() {
                     shapeList.shiftform(1);
                 }
                 else if (event.key.code == sf::Keyboard::Num2) {
-                    shapeList.shiftform(2);
+                    shapeList.shiftform(0);
                 }
                 else if (event.key.code == sf::Keyboard::Num3) {
                     shapeList.shiftform(3);
                 }
                 else if (event.key.code == sf::Keyboard::Num4) {
-                    shapeList.shiftform(4);
+                    shapeList.shiftform(2);
                 }
                 else if (event.key.code == sf::Keyboard::Num5) {
                     shapeList.shiftcolor(3);
