@@ -56,8 +56,7 @@ public:
     void addToBeginning(Shape shape);
     void addToEnd(Shape shape);
     void displayList();
-    void shiftcolor(int );
-    void shiftform(int);
+    
     void removeNodesWithSameColorOrType(int& score);
 
     Node* getHead() const;
