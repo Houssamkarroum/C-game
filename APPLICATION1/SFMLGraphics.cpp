@@ -21,12 +21,12 @@ void SFMLGraphics::displayScore(sf::Text& text, sf::Font& font, int currentScore
 }
 
 void SFMLGraphics::displayTime(sf::Text& text, sf::Font& font, int time) {
-    // Set up the text object
-    text.setFont(font); // Set the font
-    // Concatenate strings to display score and top score
-    text.setString("Time left: " + std::to_string(time));
-    text.setCharacterSize(20); // Set the character size
-    text.setFillColor(sf::Color::White); // Set the fill color
+	// Set up the text object
+	text.setFont(font); // Set the font
+	// Concatenate strings to display score and top score
+	text.setString("Time left: " + std::to_string(time));
+	text.setCharacterSize(20); // Set the character size
+	text.setFillColor(sf::Color::White); // Set the fill color
     // Set default position
     sf::Vector2f defaultPosition(750, 70); // Example position, change as needed
     // Set the position of the text
@@ -179,129 +179,41 @@ void SFMLGraphics::displayShapeList(sf::RenderWindow& window) {
     }
 }
 
-void SFMLGraphics::displaySameFormsListSFML(sf::RenderWindow& window, int form , int x) {
-    sf::Vector2f position(50, x); // Starting position to draw shapes
-    const float shapeSpacing = 10.0f; // Spacing between shapes
-
-    // Iterate over the shape list
-    Node* current = shapeList.getHead();
-    while (current != nullptr) {
-        // Check if the current shape has the same form
-        if (current->data.type == form) {
-            // Create SFML shape corresponding to the current shape node
-            sf::Drawable* sfmlShape = createSFMLShape(current->data);
-            if (sfmlShape != nullptr) {
-                // Set position for the shape
-                sf::Transformable* transformableShape = dynamic_cast<sf::Transformable*>(sfmlShape);
-                if (transformableShape != nullptr) {
-                    transformableShape->setPosition(position);
-                }
-
-                // Draw the shape to the window
-                window.draw(*sfmlShape);
-
-                // Clean up dynamically allocated memory
-                delete sfmlShape;
-
-                // Update position for the next shape
-                position.x += 50 + shapeSpacing; // Adjust spacing as needed
-                if (position.x + 100 > window.getSize().x) {
-                    position.x = 10;
-                    position.y += 100 + shapeSpacing; // Adjust spacing as needed
-                }
-            }
-        }
-
-        // Move to the next shape node
-        current = current->next;
-    }
-}
-
-void SFMLGraphics::displaySameColorsListSFML(sf::RenderWindow& window, int color , int x) {
-    sf::Vector2f position(50, x); // Starting position to draw shapes
-    const float shapeSpacing = 10.0f; // Spacing between shapes
-
-    // Iterate over the shape list
-    Node* current = shapeList.getHead();
-    while (current != nullptr) {
-        // Check if the current shape has the same color
-        if (current->data.color == color) {
-            // Create SFML shape corresponding to the current shape node
-            sf::Drawable* sfmlShape = createSFMLShape(current->data);
-            if (sfmlShape != nullptr) {
-                // Set position for the shape
-                sf::Transformable* transformableShape = dynamic_cast<sf::Transformable*>(sfmlShape);
-                if (transformableShape != nullptr) {
-                    transformableShape->setPosition(position);
-                }
-
-                // Draw the shape to the window
-                window.draw(*sfmlShape);
-
-                // Clean up dynamically allocated memory
-                delete sfmlShape;
-
-                // Update position for the next shape
-                position.x += 50 + shapeSpacing; // Adjust spacing as needed
-                if (position.x + 100 > window.getSize().x) {
-                    position.x = 10;
-                    position.y += 100 + shapeSpacing; // Adjust spacing as needed
-                }
-            }
-        }
-
-        // Move to the next shape node
-        current = current->next;
-    }
-}
-
 void SFMLGraphics::gameOver(sf::Text& gameOverText, sf::Font& font, sf::RenderWindow& window) {
     gameOverText.setFont(font);
     gameOverText.setString("Game Over!");
     gameOverText.setCharacterSize(48);
     gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setPosition(360, 250);
-    window.draw(gameOverText);
+	window.draw(gameOverText);
     window.display();
-    sf::sleep(sf::seconds(2));
-    exit(0);
-}
-
-void SFMLGraphics::YouWin(sf::Text& gameOverText, sf::Font& font, sf::RenderWindow& window) {
-    gameOverText.setFont(font);
-    gameOverText.setString("You Win!");
-    gameOverText.setCharacterSize(48);
-    gameOverText.setFillColor(sf::Color::Red);
-    gameOverText.setPosition(360, 250);
-    window.draw(gameOverText);
-    window.display();
-    sf::sleep(sf::seconds(2));
+	sf::sleep(sf::seconds(2));
     exit(0);
 }
 
 void SFMLGraphics::gamePaused(sf::Text& gamePausedText, sf::Font& font, sf::RenderWindow& window) {
-    gamePausedText.setFont(font);
-    gamePausedText.setString("Game Paused!");
-    gamePausedText.setCharacterSize(40);
-    gamePausedText.setFillColor(sf::Color::White);
-    gamePausedText.setPosition(360, 250);
-    window.draw(gamePausedText);
+	gamePausedText.setFont(font);
+	gamePausedText.setString("Game Paused!");
+	gamePausedText.setCharacterSize(40);
+	gamePausedText.setFillColor(sf::Color::White);
+	gamePausedText.setPosition(360, 250);
+	window.draw(gamePausedText);
 }
 
 void SFMLGraphics::display() {
     // Create window
-    sf::RenderWindow window(sf::VideoMode(1600, 1000), "Tetris");
-    int a = 0;
+    sf::RenderWindow window(sf::VideoMode(1300, 600), "Tetris");
+
     // Load the background image
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("C:/Users/LEGEND/Desktop/c++/APPLICATION1/bg1.png")) {
+    if (!backgroundTexture.loadFromFile("D:/ENSET/S2/Projet/bg1.png")) {
         std::cerr << "Failed to load background image." << std::endl;
         return;
     }
 
     // Load the rules image
     sf::Texture rulesTexture;
-    if (!rulesTexture.loadFromFile("C:/Users/LEGEND/Desktop/c++/APPLICATION1/rules.png")) {
+    if (!rulesTexture.loadFromFile("D:/ENSET/S2/Projet/rules.png")) {
         std::cerr << "Failed to load background image." << std::endl;
         return;
     }
@@ -346,7 +258,7 @@ void SFMLGraphics::display() {
     sf::Text nextShape_text;
     sf::Text gameOverText;
     sf::Text gamePausedText;
-
+    
     shapeList.InitLastScore();
 
     displayCurrentShape(currentShape_text, font);
@@ -412,7 +324,6 @@ void SFMLGraphics::display() {
                         delete nextDrawable;
                         currentDrawable = createSFMLShape(currentShape);
                         nextDrawable = createSFMLShape(nextShape);
-                        a = 1;
                     }
                     else {
                         gameOver(gameOverText, font, window);
@@ -431,7 +342,6 @@ void SFMLGraphics::display() {
                         delete nextDrawable;
                         currentDrawable = createSFMLShape(currentShape);
                         nextDrawable = createSFMLShape(nextShape);
-                        a = 1;
                     }
                     else {
                         gameOver(gameOverText, font, window);
@@ -446,38 +356,14 @@ void SFMLGraphics::display() {
                     // Subtract the pause duration from total elapsed time
                     totalElapsedTime += clock.getElapsedTime() - pauseStartTime;
                 }
-                else if (event.key.code == sf::Keyboard::Num1) {
-                    shapeList.shiftform(1);
-                }
-                else if (event.key.code == sf::Keyboard::Num2) {
-                    shapeList.shiftform(2);
-                }
-                else if (event.key.code == sf::Keyboard::Num3) {
-                    shapeList.shiftform(3);
-                }
-                else if (event.key.code == sf::Keyboard::Num4) {
-                    shapeList.shiftform(4);
-                }
-                else if (event.key.code == sf::Keyboard::Num5) {
-                    shapeList.shiftcolor(3);
-                }
-                else if (event.key.code == sf::Keyboard::Num6) {
-                    shapeList.shiftcolor(1);
-                }
-                else if (event.key.code == sf::Keyboard::Num7) {
-                    shapeList.shiftcolor(0);
-                }
-                else if (event.key.code == sf::Keyboard::Num8) {
-                    shapeList.shiftcolor(2);
-                }
             }
         }
 
         // Check if the game is paused
         if (paused) {
             gamePaused(gamePausedText, font, window);
-        }
-
+		}
+        
         // Display the list of shapes
         displayShapeList(window); 
         int x = 640;
@@ -517,20 +403,12 @@ void SFMLGraphics::display() {
         // Check for duplicates and remove them
         shapeList.removeNodesWithSameColorOrType();
         shapeList.updateScores();
-        
         displayScore(score_text, font, shapeList.getLastScore(), shapeList.getTopScore());
         window.draw(score_text);
-       
-        // Check if the game is won
-        if (shapeList.getLastScore() != 0 && shapeList.size == 0)
-        {
-            YouWin(gameOverText, font, window);
-		}
-            
         // Display the window
         window.display();
     }
-
+    
     // Clean up dynamically allocated memory
     delete currentDrawable;
     delete nextDrawable;
@@ -546,7 +424,7 @@ MenuResult showMenu(sf::RenderWindow& window) {
 
     // Load the background image
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("C:/Users/LEGEND/Desktop/c++/APPLICATION1/bg1.png")) {
+    if (!backgroundTexture.loadFromFile("D:/ENSET/S2/Projet/bg1.png")) {
         std::cerr << "Failed to load background image." << std::endl;
         return Exit;
     }

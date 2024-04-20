@@ -25,7 +25,6 @@ struct Shape {
     int type;
     int color;
     sf::Vector2f position;
-      
 };
 
 // Define struct for Node
@@ -51,6 +50,8 @@ private:
 
 public:
     int size;
+    Node* headcolor[4];
+    Node* headshape[4];
     ShapeList();
     ~ShapeList();
     void setlastscore(int);

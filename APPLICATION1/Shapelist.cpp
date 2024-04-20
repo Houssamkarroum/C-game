@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <Windows.h>
 #include "console.h"
-using namespace std;
-ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0) , size(0) {
+
+ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0), size(0) {
     readScoresFromFile("scores.txt"); // Read scores from file when creating ShapeList
 }
 
@@ -155,8 +155,7 @@ void ShapeList::shiftform(int a) {
 
 void ShapeList::addToBeginning(Shape shape) {
     size++;
-    Console console;
-    Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr };
+    Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr,nullptr,nullptr };
     if (head)
         head->prev = newNode;
     head = newNode;
@@ -200,36 +199,9 @@ void ShapeList::addToBeginning(Shape shape) {
     }
 }
 
-void ShapeList::InitLastScore() {
-    lastScore = 0;
-}
-void ShapeList::displaySameFormsList(int form)  {
-    Node* current = head;
-    std::cout << "Shapes with the same form (" << form << "): ";
-    while (current != nullptr) {
-        if (current->data.type == form) {
-            std::cout << "(" << current->data.color << ", " << current->data.type << ") ";
-        }
-        current = current->next;
-    }
-    std::cout << std::endl;
-}
-
-void ShapeList::displaySameColorsList(int color)  {
-    Node* current = head;
-    std::cout << "Shapes with the same color (" << color << "): ";
-    while (current != nullptr) {
-        if (current->data.color == color) {
-            std::cout << "(" << current->data.color << ", " << current->data.type << ") ";
-        }
-        current = current->next;
-    }
-    std::cout << std::endl;
-}
-
 void ShapeList::addToEnd(Shape shape) {
     size++;
-    Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr };
+    Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr, nullptr ,nullptr };
     if (tail)
         tail->next = newNode;
     tail = newNode;
@@ -285,9 +257,6 @@ void ShapeList::displayList() {
     }
 }
 
-void ShapeList::setHead(Node* node) {
-    head = node;
-}
 void ShapeList::removeNodesWithSameColorOrType() {
     if (head == nullptr || head->next == nullptr || head->next->next == nullptr) {
         // If the list contains fewer than three elements, there are no patterns to check
@@ -479,8 +448,8 @@ void ShapeList::removeNodesWithSameColorOrType() {
 
 
             // Update the score
-            setlastscore(10);
-            size -= 3;
+            setLastScore(10);
+            size = size - 3;
         }
 
         else {
@@ -488,10 +457,6 @@ void ShapeList::removeNodesWithSameColorOrType() {
             current = current->next;
         }
     }
-}
-
-void ShapeList::setlastscore(int score) {
-    lastScore+= score;
 }
 
 Node* ShapeList::getHead() const {
