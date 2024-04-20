@@ -328,26 +328,38 @@ void ShapeList::removeNodesWithSameColorOrType() {
                         first->prevcouleur->nextcouleur = first->nextcouleur;
                         first->prevcouleur->prevcouleur = first->nextcouleur;
                         first->nextcouleur->prevcouleur = first->prevcouleur;
-                        first->nextcouleur->nextcouleur = first->prevcouleur;
-                        if (first == headcolor[first->data.color])
-                            headcolor[first->data.color] = first->nextcouleur;
+                        first->prevcouleur->nextcouleur = first->nextcouleur;
+                    }
+                    else if (first->nextcouleur) {
+                        first->nextcouleur->prevcouleur = nullptr;
+                    }
+                    else if(first->prevcouleur){
+                        first->prevcouleur->nextcouleur = nullptr;
                     }
 
                     if (first->nextforme && first->prevforme) {
                         first->prevforme->nextforme = first->nextforme;
                         first->prevforme->prevforme = first->nextforme;
                         first->nextforme->prevforme = first->prevforme;
-                        first->nextforme->nextforme = first->prevforme;
-                        if (first == headshape[first->data.color])
-                            headshape[first->data.color] = first->nextforme;
+                        first->prevforme->nextforme = first->nextforme;
+                    }
+                    else if (first->nextforme) {
+                        first->nextforme->prevforme = nullptr;
+                    }
+                    else if(first->prevforme){
+                        first->prevforme->nextforme = nullptr;
                     }
                     if (second->nextcouleur && second->prevcouleur) {
                         second->prevcouleur->nextcouleur = second->nextcouleur;
                         second->prevcouleur->prevcouleur = second->nextcouleur;
                         second->nextcouleur->prevcouleur = second->prevcouleur;
-                        second->nextcouleur->nextcouleur = second->prevcouleur;
-                        if (second == headcolor[second->data.color])
-                            headcolor[second->data.color] = second->nextcouleur;
+                        second->prevcouleur->nextcouleur = second->nextcouleur;
+                    }
+                    else if (second->nextcouleur) {
+                        second->nextcouleur->prevcouleur = nullptr;
+                    }
+                    else if(second->prevcouleur) {
+                        second->prevcouleur->nextcouleur = nullptr;
                     }
                     if (second->nextforme && second->prevforme){
                         second->nextforme->prevforme = second->prevforme;
@@ -374,16 +386,11 @@ void ShapeList::removeNodesWithSameColorOrType() {
                         if (third == headshape[third->data.color])
                             headshape[third->data.color] = third->nextforme;
                     }
-                }
-
-                else {
-                    tail = first->prev;
-
-                    // Update the next and prev pointers of the color/form lists in the end
-                    if (third->prevforme) {
-                        a = third->data.type;
-                        third->prevforme->nextforme = headshape[a];
-                        headshape[a]->prevforme = third->prevforme;
+                    else if (third->nextcouleur) {
+                        third->nextcouleur->prevcouleur = nullptr;
+                    }
+                    else if (third->prevcouleur) {
+                        third->prevcouleur->nextcouleur = nullptr;
                     }
                     if (third->prevcouleur) {
                         a = third->data.color;
@@ -396,10 +403,8 @@ void ShapeList::removeNodesWithSameColorOrType() {
                         second->prevforme->nextforme = headshape[a];
                         headshape[a]->prevforme = second->prevforme;
                     }
-                    if (second->prevcouleur) {
-                        a = second->data.color;
-                        second->prevcouleur->nextcouleur = headcolor[a];
-                        headcolor[a]->prevcouleur = second->prevcouleur;
+                    else if(third->prevforme) {
+                        third->prevforme->nextforme = nullptr;
                     }
 
                     if (first->prevforme) {
