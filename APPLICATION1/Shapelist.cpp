@@ -380,19 +380,17 @@ void ShapeList::removeNodesWithSameColorOrType() {
                         if (second == headcolor[second->data.color])
                             headcolor[second->data.color] = second->nextcouleur;
                     }
-
-                    if (second->nextforme && second->prevforme) {
-                        second->prevforme->nextforme = second->nextforme;
-                        second->prevforme->prevforme = second->nextforme;
+                    if (second->nextforme && second->prevforme){
                         second->nextforme->prevforme = second->prevforme;
-                        second->nextforme->nextforme = second->prevforme;
-                        if (second == headshape[second->data.color])
-                            headshape[second->data.color] = second->nextforme;
+                        second->prevforme->nextforme = second->nextforme;
+                    }else if (second->nextforme) {
+                        second->nextforme->prevforme = nullptr;
+                    }
+                    else if(second->prevforme){
+                        second->prevforme->nextforme = nullptr;
                     }
 
-                    if (third->nextcouleur && third->prevcouleur) {
-                        third->prevcouleur->nextcouleur = third->nextcouleur;
-                        third->prevcouleur->prevcouleur = third->nextcouleur;
+                    if (third->nextcouleur && third->prevcouleur){
                         third->nextcouleur->prevcouleur = third->prevcouleur;
                         third->nextcouleur->nextcouleur = third->prevcouleur;
                         if (third == headcolor[third->data.color])
