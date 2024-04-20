@@ -1,27 +1,32 @@
-//#ifndef SFML_GRAPHICS_H
-//#define SFML_GRAPHICS_H
-//
-//#include <SFML/Graphics.hpp>
-//#include "ShapeList.h"
-//
-//class SFMLGraphics {
-//private:
-//    sf::RenderWindow window;
-//    sf::Font font;
-//    sf::Text text;
-//    sf::Texture squareTexture;
-//    sf::Texture circleTexture;
-//    sf::Texture triangleTexture;
-//    sf::Texture rectangleTexture;
-//
-//    sf::Sprite currentShapeSprite;
-//    sf::Sprite nextShapeSprite;
-//
-//public:
-//    SFMLGraphics();
-//    void display(ShapeList& shapeList, Shape currentShape, Shape nextShape, int currentScore, int topScore);
-//    int getUserChoice();
-//    void loadTextures();
-//};
-//
-//#endif // SFML_GRAPHICS_H
+#ifndef SFML_H
+#define SFML_H
+
+#include <SFML/Graphics.hpp>
+#include "shapelist.h"
+#include "Console.h"
+
+class SFMLGraphics {
+private:
+    sf::RenderWindow window;
+    void displayScore(sf::Text&, sf::Font&, int, int);
+    void displayTime(sf::Text&, sf::Font&, int);
+    void displayArrows(sf::RenderWindow&);
+    void displayCurrentShape(sf::Text&, sf::Font&);
+    void displayNextShape(sf::Text&, sf::Font&);
+    void displaySameFormsListSFML(sf::RenderWindow& window, int form ,int x);
+    void displaySameColorsListSFML(sf::RenderWindow& window, int form , int x);
+    void displayShapeList(sf::RenderWindow&);
+    void gameOver(sf::Text&, sf::Font&, sf::RenderWindow&);
+    void gamePaused(sf::Text&, sf::Font&, sf::RenderWindow&);
+    void YouWin(sf::Text&, sf::Font&, sf::RenderWindow&);
+    sf::Color getColorFromIndex(int);
+    sf::Drawable* createSFMLShape(const Shape&);
+    ShapeList shapeList;
+    Console console;
+
+public:
+    void display();
+    void menu();
+};
+
+#endif
