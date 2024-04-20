@@ -25,6 +25,7 @@ struct Shape {
     int type;
     int color;
     sf::Vector2f position;
+      
 };
 
 // Define struct for Node
@@ -50,10 +51,10 @@ private:
 
 public:
     int size;
-    Node* headcolor[4];
-    Node* headshape[4];
     ShapeList();
     ~ShapeList();
+    void setlastscore(int);
+    void setHead(Node*);
     void addToBeginning(Shape shape);
     void addToEnd(Shape shape);
     void displayList();
@@ -64,7 +65,13 @@ public:
     Node* getHead() const;
     void setHead(Node*);
     int getLastScore() const;
+    void displaySameFormsList(int );
+    void displaySameColorsList(int );
+    void InitLastScore();
+
     int getTopScore() const;
+    void establishFormLinks();
+    void establishColorLinks();
     void setTopScore(int score);
     void setLastScore(int score);
     void InitLastScore();

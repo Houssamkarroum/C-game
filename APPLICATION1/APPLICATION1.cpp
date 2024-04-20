@@ -81,6 +81,9 @@ using namespace std;
 
 
 int main() {
+    SFMLGraphics app;
+    app.menu();
+
 
     SFMLGraphics app;
     app.menu();

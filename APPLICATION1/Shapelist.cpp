@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <Windows.h>
 #include "console.h"
-
-ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0), size(0) {
+using namespace std;
+ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0) , size(0) {
     readScoresFromFile("scores.txt"); // Read scores from file when creating ShapeList
 }
 
@@ -55,17 +55,20 @@ ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0)
 //}
 
 void ShapeList::shiftcolor(int a) {
+    if (a > 3) {
+        return;
+    }
     // get head jouj merate    
     Node* current = getHead();
     Node* current1 = getHead();
     // get head dyal list khasa b couleur
-    while (current->data.color != a) {  
+    while (current !=nullptr && current->data.color != a) {
         current = current->next;
         current1 = current1->next;
     }
     Node* tail = nullptr;
     // get tail dyal list khasa b couleur
-    while (current1->nextcouleur != nullptr) {
+    while (current1 != nullptr && current1->nextcouleur != nullptr) {
         current1 = current1->nextcouleur;
         tail = current1;
     }
@@ -79,21 +82,64 @@ void ShapeList::shiftcolor(int a) {
         /* swappos(current, tail);*/
         current = current->nextcouleur;
     }
-
+    this->establishFormLinks();
 }
 
+void ShapeList::establishColorLinks() {
+    // Iterate through the list to establish color links
+    Node* current = getHead();
+    while (current != nullptr) {
+        // Find the next shape with the same color
+        Node* nextSameColor = current->next;
+        while (nextSameColor != nullptr && nextSameColor->data.color != current->data.color) {
+            nextSameColor = nextSameColor->next;
+        }
+        // Establish the link if found
+        current->nextcouleur = nextSameColor;
+        if (nextSameColor != nullptr) {
+            nextSameColor->prevcouleur = current;
+        }
+        // Move to the next shape
+        current = current->next;
+    }
+}
+
+void ShapeList::establishFormLinks() {
+    // Iterate through the list to establish form links
+    Node* current = getHead();
+    while (current != nullptr) {
+        // Find the next shape with the same form
+        Node* nextSameForm = current->next;
+
+        while (nextSameForm != nullptr && nextSameForm->data.type != current->data.type) {
+            nextSameForm = nextSameForm->next;
+        }
+        // Establish the link if found
+        current->nextforme = nextSameForm;
+        if (nextSameForm != nullptr) {
+            nextSameForm->prevforme = current;
+        }
+        // Move to the next shape
+        current = current->next;
+    }
+}
+
+
 void ShapeList::shiftform(int a) {
+    if (a > 3) {
+        return;
+    }
     // get head jouj merate
     Node* current = getHead();
     Node* current1 = getHead();
     // get head dyal list khasa b form
-    while (current->data.type != a) {
+    while (current != nullptr &&  current->data.type != a) {
         current = current->next;
         current1 = current1->next;
     }
     Node* tail = nullptr;
     // get tail dyal list khasa b form
-    while (current1->nextforme != nullptr) {
+    while (current1 != nullptr &&  current1->nextforme != nullptr) {
         current1 = current1->nextforme;
         tail = current1;
     }
@@ -104,12 +150,13 @@ void ShapeList::shiftform(int a) {
         /* swappos(current, tail);*/
         current = current->nextforme;
     }
-
+    this->establishColorLinks();
 }
 
 void ShapeList::addToBeginning(Shape shape) {
     size++;
-    Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr,nullptr,nullptr };
+    Console console;
+    Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr };
     if (head)
         head->prev = newNode;
     head = newNode;
@@ -120,19 +167,13 @@ void ShapeList::addToBeginning(Shape shape) {
     newNode->prevcouleur = newNode;
 
 
-    newNode->nextforme = newNode;
-    newNode->prevforme = newNode;
+            if (current->data.color == newNode->data.color) {
+                newNode->nextcouleur = current;
+                current->prevcouleur = newNode;
+                count1 = 1;
 
-    if (headcolor[newNode->data.color]) {
-        headcolor[newNode->data.color]->prevcouleur->nextcouleur = newNode;
-        newNode->prevcouleur = headcolor[newNode->data.color]->prevcouleur;
-        newNode->nextcouleur = headcolor[newNode->data.color];
-        headcolor[newNode->data.color]->prevcouleur = newNode;
-        headcolor[newNode->data.color] = newNode;
-    }
-    else {
-        headcolor[newNode->data.color] = newNode;
-    }
+            }
+        }
 
     // forme 
     if (headshape[newNode->data.type]) {
@@ -146,13 +187,49 @@ void ShapeList::addToBeginning(Shape shape) {
     {
         headshape[newNode->data.type] = newNode;
 
-    }
 
+            if (current->data.type == newNode->data.type) {
+                newNode->nextforme = current;
+                current->prevforme = newNode;
+                count2 = 1;
+
+            }
+        }
+
+        current = current->next;
+    }
+}
+
+void ShapeList::InitLastScore() {
+    lastScore = 0;
+}
+void ShapeList::displaySameFormsList(int form)  {
+    Node* current = head;
+    std::cout << "Shapes with the same form (" << form << "): ";
+    while (current != nullptr) {
+        if (current->data.type == form) {
+            std::cout << "(" << current->data.color << ", " << current->data.type << ") ";
+        }
+        current = current->next;
+    }
+    std::cout << std::endl;
+}
+
+void ShapeList::displaySameColorsList(int color)  {
+    Node* current = head;
+    std::cout << "Shapes with the same color (" << color << "): ";
+    while (current != nullptr) {
+        if (current->data.color == color) {
+            std::cout << "(" << current->data.color << ", " << current->data.type << ") ";
+        }
+        current = current->next;
+    }
+    std::cout << std::endl;
 }
 
 void ShapeList::addToEnd(Shape shape) {
     size++;
-    Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr, nullptr ,nullptr };
+    Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr };
     if (tail)
         tail->next = newNode;
     tail = newNode;
@@ -208,6 +285,9 @@ void ShapeList::displayList() {
     }
 }
 
+void ShapeList::setHead(Node* node) {
+    head = node;
+}
 void ShapeList::removeNodesWithSameColorOrType() {
     if (head == nullptr || head->next == nullptr || head->next->next == nullptr) {
         // If the list contains fewer than three elements, there are no patterns to check
@@ -270,8 +350,7 @@ void ShapeList::removeNodesWithSameColorOrType() {
                 }
 
             }
-
-            else {
+            else { 
                 first->prev->next = third->next; // Update the next pointer of the previous node
                 if (third->next) {
                     third->next->prev = first->prev; // Update the prev pointer of the next node
@@ -293,7 +372,6 @@ void ShapeList::removeNodesWithSameColorOrType() {
                         if (first == headshape[first->data.color])
                             headshape[first->data.color] = first->nextforme;
                     }
-
                     if (second->nextcouleur && second->prevcouleur) {
                         second->prevcouleur->nextcouleur = second->nextcouleur;
                         second->prevcouleur->prevcouleur = second->nextcouleur;
@@ -403,8 +481,8 @@ void ShapeList::removeNodesWithSameColorOrType() {
 
 
             // Update the score
-            setLastScore(10);
-            size = size - 3;
+            setlastscore(10);
+            size -= 3;
         }
 
         else {
@@ -412,6 +490,10 @@ void ShapeList::removeNodesWithSameColorOrType() {
             current = current->next;
         }
     }
+}
+
+void ShapeList::setlastscore(int score) {
+    lastScore+= score;
 }
 
 Node* ShapeList::getHead() const {

@@ -86,16 +86,13 @@ void Console::console_game() {
 
             shapeList.shiftcolor(a);
 
-
         }
         else if (choice == 4) {
-            int a;
-            cout << "Enter the form you want to shift: ";
-            cin >> a;
+			int a;
+			cout << "Enter the form you want to shift: ";
+			cin >> a;
 
-            shapeList.shiftform(a);
-
-
+			shapeList.shiftform(a);
         }
         else {
             //PlaySound(TEXT("chosefailed.wav"), NULL, SND_SYNC);
@@ -110,6 +107,21 @@ void Console::console_game() {
         shapeList.removeNodesWithSameColorOrType();
 
         console.affichelist(shapeList);
+        cout << "" << endl;
+        cout << "" << endl;
+        for (int i = 0; i < 4; i++)
+        {   
+            shapeList.displaySameColorsList(i);
+            
+        }
+        cout << "" << endl;
+        cout << "" << endl;
+        for (int i = 0; i < 4; i++)
+        {
+            shapeList.displaySameFormsList(i);
+
+        }
+       
 
         if (currentScore > shapeList.getTopScore()) {
             console.setTopScore(currentScore);
@@ -161,6 +173,8 @@ void afficheshape(Shape currentShape, int x) {
 
 
 }
+
+
 void Console::affichelist(ShapeList shapeList) {
 
     // Display the list of shapes
