@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include "console.h"
 
-ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0) {
+ShapeList::ShapeList() : head(nullptr), tail(nullptr), lastScore(0), topScore(0), size(0) {
     readScoresFromFile("scores.txt"); // Read scores from file when creating ShapeList
 }
 
@@ -108,7 +108,7 @@ void ShapeList::shiftform(int a) {
 }
 
 void ShapeList::addToBeginning(Shape shape) {
-
+    size++;
     Node* newNode = new Node{ shape, head, nullptr , nullptr ,nullptr,nullptr,nullptr };
     if (head)
         head->prev = newNode;
@@ -150,8 +150,8 @@ void ShapeList::addToBeginning(Shape shape) {
 
 }
 
-
 void ShapeList::addToEnd(Shape shape) {
+    size++;
     Node* newNode = new Node{ shape, nullptr, tail , nullptr ,nullptr, nullptr ,nullptr };
     if (tail)
         tail->next = newNode;
@@ -208,7 +208,7 @@ void ShapeList::displayList() {
     }
 }
 
-void ShapeList::removeNodesWithSameColorOrType(int& score) {
+void ShapeList::removeNodesWithSameColorOrType() {
     if (head == nullptr || head->next == nullptr || head->next->next == nullptr) {
         // If the list contains fewer than three elements, there are no patterns to check
         return;
@@ -403,7 +403,8 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
 
 
             // Update the score
-            score += 300;
+            setLastScore(10);
+            size = size - 3;
         }
 
         else {
@@ -413,9 +414,12 @@ void ShapeList::removeNodesWithSameColorOrType(int& score) {
     }
 }
 
-
 Node* ShapeList::getHead() const {
     return head;
+}
+
+void ShapeList::setHead(Node* node) {
+	head = node;
 }
 
 void ShapeList::updateScores() {
@@ -450,11 +454,19 @@ void ShapeList::readScoresFromFile(const std::string& filename) {
         std::cout << "Unable to open file: " << filename << std::endl;
     }
 }
-// Implémentation de la fonction setTopScore
+
 void ShapeList::setTopScore(int score) {
     topScore = score;
 }
-// Implémentation de la fonction writeScoresToFile
+
+void ShapeList::setLastScore(int score) {
+	lastScore += score;
+}
+
+void ShapeList::InitLastScore() {
+	lastScore = 0;
+}
+
 void ShapeList::writeScoresToFile(const std::string& filename) {
     std::ofstream file(filename);
     if (file.is_open()) {
@@ -466,7 +478,6 @@ void ShapeList::writeScoresToFile(const std::string& filename) {
         std::cout << "Unable to open file: " << filename << std::endl;
     }
 }
-
 
 void ShapeList::createScoresFile(const std::string& filename) {
     std::ofstream file(filename);

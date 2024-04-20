@@ -7,44 +7,30 @@ using namespace std;
 
 enum MenuResult { consoleGame, graphicGame, Exit};
 
-void SFMLGraphics::displayScore(sf::Text& text, sf::RectangleShape& background, sf::Font& font, int currentScore,int topScore) {
-    // Create a rectangle shape to act as the background
-    background.setSize(sf::Vector2f(200, 100)); // Increased height to accommodate two lines of text
-    background.setFillColor(sf::Color(100, 100, 200)); // Gray color for the background
-    background.setPosition(10, 10); // Position at the top left corner
-
+void SFMLGraphics::displayScore(sf::Text& text, sf::Font& font, int currentScore, int topScore) {
     // Set up the text object
     text.setFont(font); // Set the font
     // Concatenate strings to display score and top score
     text.setString("Score: " + std::to_string(currentScore) + "\nTop Score: " + std::to_string(topScore));
     text.setCharacterSize(20); // Set the character size
     text.setFillColor(sf::Color::White); // Set the fill color
-
-    // Center the text inside the rectangle
-    sf::FloatRect textBounds = text.getLocalBounds();
-    text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-    text.setPosition(background.getPosition().x + background.getSize().x / 2.0f,
-        background.getPosition().y + background.getSize().y / 2.0f);
+    // Set default position
+    sf::Vector2f defaultPosition(80, 70); // Example position, change as needed
+    // Set the position of the text
+    text.setPosition(defaultPosition);
 }
 
-void SFMLGraphics::displayTime(sf::Text& text, sf::RectangleShape& background, sf::Font& font, int time) {
-	// Create a rectangle shape to act as the background
-	background.setSize(sf::Vector2f(200, 100)); // Increased height to accommodate two lines of text
-	background.setFillColor(sf::Color(100, 100, 200)); // Gray color for the background
-	background.setPosition(790, 10); // Position at the top left corner
-
+void SFMLGraphics::displayTime(sf::Text& text, sf::Font& font, int time) {
 	// Set up the text object
 	text.setFont(font); // Set the font
 	// Concatenate strings to display score and top score
 	text.setString("Time left: " + std::to_string(time));
 	text.setCharacterSize(20); // Set the character size
 	text.setFillColor(sf::Color::White); // Set the fill color
-
-	// Center the text inside the rectangle
-	sf::FloatRect textBounds = text.getLocalBounds();
-	text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-	text.setPosition(background.getPosition().x + background.getSize().x / 2.0f,
-		background.getPosition().y + background.getSize().y / 2.0f);
+    // Set default position
+    sf::Vector2f defaultPosition(750, 70); // Example position, change as needed
+    // Set the position of the text
+    text.setPosition(defaultPosition);
 }
 
 void SFMLGraphics::displayArrows(sf::RenderWindow& window) {
@@ -77,44 +63,30 @@ void SFMLGraphics::displayArrows(sf::RenderWindow& window) {
     window.draw(leftArrow);
 }
 
-void SFMLGraphics::displayCurrentShape(sf::Text& text, sf::RectangleShape& background, sf::Font& font) {
-    // Create a rectangle shape to act as the background
-    background.setSize(sf::Vector2f(200, 100)); // Increased height to accommodate two lines of text
-    background.setFillColor(sf::Color(100, 100, 200)); // Gray color for the background
-    background.setPosition(10, 170); // Position at the top left corner
-
+void SFMLGraphics::displayCurrentShape(sf::Text& text, sf::Font& font) {
     // Set up the text object
     text.setFont(font); // Set the font
     // Concatenate strings to display score and top score
     text.setString("Current Shape: " );
     text.setCharacterSize(20); // Set the character size
     text.setFillColor(sf::Color::White); // Set the fill color
-
-    // Center the text inside the rectangle
-    sf::FloatRect textBounds = text.getLocalBounds();
-    text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-    text.setPosition(background.getPosition().x + background.getSize().x / 2.0f,
-        background.getPosition().y + background.getSize().y / 2.0f);
+    // Set default position
+    sf::Vector2f defaultPosition(50, 210); // Example position, change as needed
+    // Set the position of the text
+    text.setPosition(defaultPosition);
 }
 
-void SFMLGraphics::displayNextShape(sf::Text& text, sf::RectangleShape& background, sf::Font& font) {
-    // Create a rectangle shape to act as the background
-    background.setSize(sf::Vector2f(200, 100)); // Increased height to accommodate two lines of text
-    background.setFillColor(sf::Color(100, 100, 200)); // Gray color for the background
-    background.setPosition(650, 170); // Position at the top left corner
-
+void SFMLGraphics::displayNextShape(sf::Text& text, sf::Font& font) {
     // Set up the text object
     text.setFont(font); // Set the font
     // Concatenate strings to display score and top score
     text.setString("Next Shape: ");
     text.setCharacterSize(20); // Set the character size
     text.setFillColor(sf::Color::White); // Set the fill color
-
-    // Center the text inside the rectangle
-    sf::FloatRect textBounds = text.getLocalBounds();
-    text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-    text.setPosition(background.getPosition().x + background.getSize().x / 2.0f,
-        background.getPosition().y + background.getSize().y / 2.0f);
+    // Set default position
+    sf::Vector2f defaultPosition(740, 210); // Example position, change as needed
+    // Set the position of the text
+    text.setPosition(defaultPosition);
 }
 
 sf::Color SFMLGraphics::getColorFromIndex(int colorIndex) {
@@ -173,7 +145,7 @@ sf::Drawable* SFMLGraphics::createSFMLShape(const Shape& shape) {
 }
 
 void SFMLGraphics::displayShapeList(sf::RenderWindow& window) {
-    sf::Vector2f position(10, 450); // Starting position to draw shapes
+    sf::Vector2f position(50, 450); // Starting position to draw shapes
     const float shapeSpacing = 10.0f; // Spacing between shapes
 
     // Iterate over the shape list
@@ -207,16 +179,58 @@ void SFMLGraphics::displayShapeList(sf::RenderWindow& window) {
     }
 }
 
+void SFMLGraphics::gameOver(sf::Text& gameOverText, sf::Font& font, sf::RenderWindow& window) {
+    gameOverText.setFont(font);
+    gameOverText.setString("Game Over!");
+    gameOverText.setCharacterSize(48);
+    gameOverText.setFillColor(sf::Color::Red);
+    gameOverText.setPosition(360, 250);
+	window.draw(gameOverText);
+    window.display();
+	sf::sleep(sf::seconds(2));
+    exit(0);
+}
+
+void SFMLGraphics::gamePaused(sf::Text& gamePausedText, sf::Font& font, sf::RenderWindow& window) {
+	gamePausedText.setFont(font);
+	gamePausedText.setString("Game Paused!");
+	gamePausedText.setCharacterSize(40);
+	gamePausedText.setFillColor(sf::Color::White);
+	gamePausedText.setPosition(360, 250);
+	window.draw(gamePausedText);
+}
+
 void SFMLGraphics::display() {
     // Create window
-    sf::RenderWindow window(sf::VideoMode(1000, 600), "Tetris");
+    sf::RenderWindow window(sf::VideoMode(1300, 600), "Tetris");
+
+    // Load the background image
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("D:/ENSET/S2/Projet/bg1.png")) {
+        std::cerr << "Failed to load background image." << std::endl;
+        return;
+    }
+
+    // Load the rules image
+    sf::Texture rulesTexture;
+    if (!rulesTexture.loadFromFile("D:/ENSET/S2/Projet/rules.png")) {
+        std::cerr << "Failed to load background image." << std::endl;
+        return;
+    }
+
+    // Create a sprite for the background and set its texture
+    sf::Sprite backgroundSprite;
+    backgroundSprite.setTexture(backgroundTexture);
+    backgroundSprite.scale(sf::Vector2f(0.735, 0.8));
+
+    // Create a sprite for the rules and set its texture
+    sf::Sprite rulesSprite;
+    rulesSprite.setTexture(rulesTexture);
+    rulesSprite.setPosition(sf::Vector2f(1003, 80));
+    rulesSprite.scale(sf::Vector2f(0.5, 0.6));
 
     // Seed the random number generator
     std::srand(static_cast<unsigned>(std::time(nullptr)));
-
-    // Set initial score variables
-    int currentScore = 0;
-    int topScore = 0;
     Shape currentShape = { std::rand() % 4, std::rand() % 4 };
     Shape nextShape = { std::rand() % 4, std::rand() % 4 };
 
@@ -228,21 +242,27 @@ void SFMLGraphics::display() {
         return;
     }
 
-    // Create a rectangle shape and text object to display the score and the time left
-    sf::RectangleShape score_background;
-    sf::RectangleShape time_background;
-    sf::RectangleShape currentShapebackground;
-    sf::RectangleShape nextShapebackground;
+    // Define time limit and clock
+    int timeLimit = 100; // Time limit in seconds
+    sf::Clock clock;
+    sf::Time totalElapsedTime;
+    sf::Time pauseStartTime;
 
+    // Define paused state
+    bool paused = false;
+
+    // Define text objects
     sf::Text score_text;
     sf::Text time_text;
     sf::Text currentShape_text;
     sf::Text nextShape_text;
+    sf::Text gameOverText;
+    sf::Text gamePausedText;
+    
+    shapeList.InitLastScore();
 
-    displayScore(score_text, score_background, font, currentScore, topScore);
-    displayTime(time_text, time_background, font, 0);
-    displayCurrentShape(currentShape_text, currentShapebackground, font);
-    displayNextShape(nextShape_text, nextShapebackground, font);
+    displayCurrentShape(currentShape_text, font);
+    displayNextShape(nextShape_text, font);
 
     // Create drawable objects for current and next shapes
     sf::Drawable* currentDrawable = createSFMLShape(currentShape);
@@ -253,14 +273,25 @@ void SFMLGraphics::display() {
         // Clear the window
         window.clear();
 
-        // Draw the background rectangle
-        window.draw(score_background);
-        window.draw(time_background);
-        window.draw(currentShapebackground);
-        window.draw(nextShapebackground);
+        // Draw the background image
+        window.draw(backgroundSprite);
+        // Draw the background rules
+        window.draw(rulesSprite);
+
+        // Update and display time left
+        sf::Time elapsedTime = clock.restart(); // Restart the clock and get elapsed time
+        if (!paused) {
+            totalElapsedTime += elapsedTime; // Accumulate total elapsed time
+        }
+        int secondsLeft = timeLimit - totalElapsedTime.asSeconds();
+        displayTime(time_text, font, secondsLeft);
+
+        // Check if time is up
+        if (secondsLeft <= 0) {
+            gameOver(gameOverText, font, window);
+        }
 
         // Draw the text
-        window.draw(score_text);
         window.draw(time_text);
         window.draw(currentShape_text);
         window.draw(nextShape_text);
@@ -276,39 +307,63 @@ void SFMLGraphics::display() {
                 window.close();
             }
             else if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Escape) {
+                if (event.key.code == sf::Keyboard::Q) {
                     // Close the window if Escape key is pressed
                     window.close();
                 }
                 else if (event.key.code == sf::Keyboard::Right) {
                     // Add the next shape to the end of the list
-                    shapeList.addToEnd(currentShape);
-                    // Update current shape
-                    currentShape = nextShape;
-                    // Generate new random shape for next iteration
-                    nextShape = { std::rand() % 4, std::rand() % 4 };
-                    // Update drawable objects for current and next shapes
-                    delete currentDrawable;
-                    delete nextDrawable;
-                    currentDrawable = createSFMLShape(currentShape);
-                    nextDrawable = createSFMLShape(nextShape);
+                    if (shapeList.size < 14) {
+                        shapeList.addToEnd(currentShape);
+                        // Update current shape
+                        currentShape = nextShape;
+                        // Generate new random shape for next iteration
+                        nextShape = { std::rand() % 4, std::rand() % 4 };
+                        // Update drawable objects for current and next shapes
+                        delete currentDrawable;
+                        delete nextDrawable;
+                        currentDrawable = createSFMLShape(currentShape);
+                        nextDrawable = createSFMLShape(nextShape);
+                    }
+                    else {
+                        gameOver(gameOverText, font, window);
+                    }
                 }
                 else if (event.key.code == sf::Keyboard::Left) {
                     // Add the next shape to the beginning of the list
-                    shapeList.addToBeginning(currentShape);
-                    // Update current shape
-                    currentShape = nextShape;
-                    // Generate new random shape for next iteration
-                    nextShape = { std::rand() % 4, std::rand() % 4 };
-                    // Update drawable objects for current and next shapes
-                    delete currentDrawable;
-                    delete nextDrawable;
-                    currentDrawable = createSFMLShape(currentShape);
-                    nextDrawable = createSFMLShape(nextShape);
+                    if (shapeList.size < 14) {
+                        shapeList.addToBeginning(currentShape);
+                        // Update current shape
+                        currentShape = nextShape;
+                        // Generate new random shape for next iteration
+                        nextShape = { std::rand() % 4, std::rand() % 4 };
+                        // Update drawable objects for current and next shapes
+                        delete currentDrawable;
+                        delete nextDrawable;
+                        currentDrawable = createSFMLShape(currentShape);
+                        nextDrawable = createSFMLShape(nextShape);
+                    }
+                    else {
+                        gameOver(gameOverText, font, window);
+                    }
+                }
+                else if (event.key.code == sf::Keyboard::P) {
+                    paused = true; // Pause the game
+                    pauseStartTime = clock.getElapsedTime(); // Record the time when paused
+                }
+                else if (event.key.code == sf::Keyboard::R) {
+                    paused = false; // Resume the game
+                    // Subtract the pause duration from total elapsed time
+                    totalElapsedTime += clock.getElapsedTime() - pauseStartTime;
                 }
             }
         }
 
+        // Check if the game is paused
+        if (paused) {
+            gamePaused(gamePausedText, font, window);
+		}
+        
         // Display the list of shapes
         displayShapeList(window);
 
@@ -331,23 +386,15 @@ void SFMLGraphics::display() {
             window.draw(*currentDrawable);
             window.draw(*nextDrawable);
         }
-
-        // Update and display scores
-        currentScore += shapeList.getLastScore();
-        // Your code for displaying the score here
-
         // Check for duplicates and remove them
-        shapeList.removeNodesWithSameColorOrType(currentScore);
-
-        // Update top score if necessary
-        if (currentScore > topScore) {
-            topScore = currentScore;
-        }
-
+        shapeList.removeNodesWithSameColorOrType();
+        shapeList.updateScores();
+        displayScore(score_text, font, shapeList.getLastScore(), shapeList.getTopScore());
+        window.draw(score_text);
         // Display the window
         window.display();
     }
-
+    
     // Clean up dynamically allocated memory
     delete currentDrawable;
     delete nextDrawable;
@@ -360,6 +407,18 @@ MenuResult showMenu(sf::RenderWindow& window) {
         std::cerr << "Failed to load font." << std::endl;
         return Exit;
     }
+
+    // Load the background image
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("D:/ENSET/S2/Projet/bg1.png")) {
+        std::cerr << "Failed to load background image." << std::endl;
+        return Exit;
+    }
+
+    // Create a sprite for the background and set its texture
+    sf::Sprite backgroundSprite;
+    backgroundSprite.setTexture(backgroundTexture);
+    backgroundSprite.scale(sf::Vector2f(0.4, 0.4));
 
     // Play menu item
     sf::Text consoleText;
@@ -414,6 +473,7 @@ MenuResult showMenu(sf::RenderWindow& window) {
         window.clear();
 
         // Draw menu items
+        window.draw(backgroundSprite);
         window.draw(consoleText);
         window.draw(graghicsText);
         window.draw(exitText);
@@ -426,7 +486,7 @@ MenuResult showMenu(sf::RenderWindow& window) {
 
 void SFMLGraphics::menu() {
     // Create window
-    sf::RenderWindow window(sf::VideoMode(600, 300), "Menu");
+    sf::RenderWindow window(sf::VideoMode(540, 300), "Menu");
 
     // Show menu
     MenuResult result = showMenu(window);

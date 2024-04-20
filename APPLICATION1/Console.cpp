@@ -107,7 +107,7 @@ void Console::console_game() {
 
 
         // Check for duplicates and remove them
-        shapeList.removeNodesWithSameColorOrType(currentScore);
+        shapeList.removeNodesWithSameColorOrType();
 
         console.affichelist(shapeList);
 
